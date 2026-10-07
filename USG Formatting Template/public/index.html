@@ -1,0 +1,3076 @@
+<!DOCTYPE html><html lang="en"><head>
+
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Legislative & Formatting Guide - USG</title>
+<link rel="icon" type="image/png" href="assets/favicon-square.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Sans+3:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<template id="__bundler_thumbnail" data-bg-color="#8c1515">
+  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <rect x="40" y="30" width="120" height="150" fill="#fbfaf6" stroke="#3a332c" stroke-width="3"/>
+    <rect x="40" y="30" width="120" height="10" fill="#8c1515"/>
+    <text x="100" y="85" text-anchor="middle" font-family="Georgia, serif" font-weight="700" font-size="16" fill="#1a1612">USG</text>
+    <line x1="60" y1="105" x2="140" y2="105" stroke="#3a332c" stroke-width="1.5"/>
+    <line x1="60" y1="120" x2="140" y2="120" stroke="#3a332c" stroke-width="1"/>
+    <line x1="60" y1="132" x2="130" y2="132" stroke="#3a332c" stroke-width="1"/>
+    <line x1="60" y1="144" x2="135" y2="144" stroke="#3a332c" stroke-width="1"/>
+    <line x1="60" y1="156" x2="115" y2="156" stroke="#3a332c" stroke-width="1"/>
+  </svg>
+</template>
+<script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
+<script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+<script src="https://unpkg.com/mammoth@1.7.2/mammoth.browser.min.js"></script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<style>
+  :root{
+    --ink:#1a1612;
+    --ink-soft:#3a332c;
+    --muted:#6b6256;
+    --paper:#fbfaf6;
+    --paper-2:#f4f1ea;
+    --rule:#d8d2c4;
+    --rule-strong:#a79f8d;
+    --crimson:#8c1515;
+    --crimson-soft:#b8324a;
+    --accent:#3a332c;
+    --gold:#a07e2b;
+    --warn:#a8671e;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Source Sans 3","Helvetica Neue",Arial,sans-serif;
+    font-size:14px;line-height:1.5;
+    min-height:100vh;
+  }
+
+  /* ---------- top masthead ---------- */
+  .masthead{
+    position:relative;
+    background:#fff;
+    border-bottom:1px solid var(--rule);
+  }
+  .masthead-inner{
+    max-width:1320px;margin:0 auto;padding:22px 28px 18px;
+    display:flex;align-items:center;gap:24px;
+  }
+  /* left: big "Document Formatter" — centered within its half */
+  .brand{
+    flex:1 1 0;
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    text-align:center;
+  }
+  .brand .title{
+    font-family:"EB Garamond",Georgia,serif;
+    font-weight:600;font-size:34px;line-height:1.05;
+    letter-spacing:.2px;color:var(--ink);
+  }
+  .brand .sub{
+    font-family:"JetBrains Mono",monospace;font-size:10.5px;
+    color:var(--muted);letter-spacing:1.8px;text-transform:uppercase;
+  }
+  /* center: thin divider line */
+  .masthead-divider{
+    flex:0 0 auto;align-self:center;
+    width:1px;height:40px;background:var(--rule);
+  }
+
+  /* right: centered stacked identity */
+  .identity{
+    flex:1 1 0;
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+    text-align:center;
+  }
+  .identity .univ{
+    font-family:"EB Garamond",Georgia,serif;
+    font-weight:600;font-size:20px;letter-spacing:.3px;color:var(--crimson);
+    text-transform:uppercase;
+  }
+  .identity .org{
+    font-family:"EB Garamond",Georgia,serif;
+    font-weight:500;font-size:14px;letter-spacing:.4px;color:var(--ink);
+    text-transform:uppercase;
+  }
+  .identity-logo{
+    display:block;height:64px;width:auto;max-width:100%;
+    object-fit:contain;
+  }
+  @media (max-width:1100px){
+    .masthead-inner{padding-right:70px}
+  }
+
+  /* thin crimson accent bar */
+  .crimson-bar{height:3px;background:var(--crimson)}
+
+  /* ---------- tab strip ---------- */
+  .tab-strip{
+    background:var(--paper-2);
+    border-bottom:1px solid var(--rule);
+  }
+  .tab-strip-inner{
+    position:relative;
+    max-width:1320px;margin:0 auto;padding:0 28px;
+    display:flex;align-items:stretch;justify-content:center;gap:0;
+  }
+  /* Settings dropdown lives in the top-right corner of the masthead */
+  .masthead .settings-dropdown{
+    position:absolute; top:10px; right:18px;
+  }
+  .settings-auth{cursor:default}
+  .settings-auth:hover{background:transparent}
+  .settings-auth .auth-btn{padding:6px 14px; white-space:nowrap; flex:none}
+  .settings-auth .auth-email{font-family:"Source Sans 3",sans-serif; font-size:13px; font-weight:700; color:var(--ink); max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .settings-auth .settings-row-desc{max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .settings-auth .auth-link{font-family:"Source Sans 3",sans-serif; font-size:12px; color:var(--muted); font-weight:600; letter-spacing:.3px; text-decoration:none; border-bottom:1px solid var(--rule-strong); flex:none}
+  .settings-auth .auth-link:hover{color:var(--crimson); border-color:var(--crimson)}
+  .pro-toggle{
+    display:inline-flex; align-items:center; gap:8px;
+    cursor:pointer; user-select:none;
+  }
+  .pro-toggle .pt-track{
+    width:34px; height:18px; border-radius:999px;
+    background:#d9cfc0; border:1px solid #c9bda8;
+    position:relative; transition:background .18s ease, border-color .18s ease;
+  }
+  .pro-toggle .pt-track::after{
+    content:''; position:absolute; top:1px; left:1px;
+    width:14px; height:14px; border-radius:50%;
+    background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.15);
+    transition:transform .18s ease;
+  }
+  .pro-toggle input{position:absolute; opacity:0; pointer-events:none;}
+  .pro-toggle input:checked + .pt-track{background:var(--crimson); border-color:var(--crimson);}
+  .pro-toggle input:checked + .pt-track::after{transform:translateX(16px);}
+  .pro-toggle input:focus-visible + .pt-track{outline:2px solid var(--crimson); outline-offset:2px;}
+
+  /* ---------- Settings dropdown (right end of tab strip) ---------- */
+  .settings-bar{ margin:0; }
+  .settings-dropdown{ position:relative; }
+  .settings-trigger{
+    appearance:none; cursor:pointer;
+    display:inline-flex; align-items:center; justify-content:center;
+    width:32px; height:32px; padding:0;
+    background:transparent; border:1px solid transparent; border-radius:50%;
+    color:var(--muted);
+    transition:color .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .settings-trigger svg{ display:block; }
+  .settings-trigger:hover{ color:var(--ink); border-color:var(--rule-strong); background:#fff; }
+  .settings-dropdown.open .settings-trigger{ color:var(--ink); border-color:var(--ink); background:#fff; }
+  .settings-menu{
+    display:none; position:fixed; z-index:2147483647;
+    min-width:280px; background:#fff; border:1px solid var(--rule-strong);
+    border-radius:8px; box-shadow:0 14px 30px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
+    padding:6px;
+  }
+  /* Menu is moved to body at runtime; JS toggles display inline. */
+  .settings-row{
+    display:flex; align-items:center; gap:14px; justify-content:space-between;
+    padding:10px 12px; border-radius:6px; cursor:pointer;
+  }
+  .settings-row:hover{ background:var(--paper-2); }
+  .settings-row-main{ display:flex; flex-direction:column; gap:2px; }
+  .settings-row-label{
+    font-family:"Source Sans 3",sans-serif; font-size:13px; font-weight:700;
+    color:var(--ink); letter-spacing:.02em;
+  }
+  .settings-row-desc{
+    font-family:"Source Sans 3",sans-serif; font-size:11.5px; color:var(--muted); line-height:1.35;
+  }
+  body.pro-mode .settings-row-label{ color:var(--crimson); }
+
+  /* Settings menu — section separator + buttoned rows */
+  .settings-sep{
+    height:1px; background:var(--rule); margin:8px 4px;
+  }
+  .settings-section-label{
+    font-family:"JetBrains Mono",monospace; font-size:10px; letter-spacing:1.5px;
+    text-transform:uppercase; color:var(--muted); padding:6px 12px 2px;
+  }
+
+  body.on-guide .settings-bar{ display:none; }
+
+  /* ---------- Pro Mode banner (centered above the form in pro mode) ---------- */
+  .settings-bar{ position:relative; min-height:0; margin:0; }
+  body.pro-mode .settings-bar{ margin:0 0 12px; }
+  .pro-mode-banner{
+    display:none;
+    text-align:center;
+    font-family:"EB Garamond",Georgia,serif;
+    font-weight:700;
+    font-size:34px;
+    line-height:1.05;
+    letter-spacing:.005em;
+    color:var(--crimson-soft);
+  }
+  body.pro-mode .pro-mode-banner{ display:block; }
+
+  /* ---------- Pro Mode: strip tutorial / warning chrome ---------- */
+  body.pro-mode .definition-card,
+  body.pro-mode .compliance,
+  body.pro-mode .eyebrow,
+  body.pro-mode .hint,
+  body.pro-mode .callout,
+  body.pro-mode .rule-note,
+  body.pro-mode .blocked-note{
+    display:none !important;
+  }
+  /* Keep the Roman-numeral auto-convert hint visible in Pro Mode */
+  body.pro-mode .field .hint.hint-below:has(.roman-peek){
+    display:block !important;
+  }
+  /* In pro mode, the footer note line collapses — hide the whole note wrapper when empty-ish */
+  body.pro-mode .form-footer .note{display:none}
+  /* Neutralize the blocked-download visual state so buttons look normal */
+  body.pro-mode .btn.primary.is-blocked{
+    background:var(--crimson) !important; border-color:var(--crimson) !important; color:#fff !important;
+  }
+  .tab{
+    appearance:none;background:transparent;border:none;cursor:pointer;
+    font-family:"EB Garamond",Georgia,serif;font-size:17px;font-weight:500;
+    color:var(--muted);
+    padding:14px 22px 13px;
+    border-bottom:2px solid transparent;
+    display:inline-flex;align-items:center;gap:10px;
+    letter-spacing:.3px;
+  }
+  .tab .kind{
+    font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:1.5px;
+    color:var(--muted);text-transform:uppercase;
+    border:1px solid var(--rule);padding:2px 7px;border-radius:2px;background:#fff;
+  }
+  .tab:hover{color:var(--ink)}
+  .tab.active{color:var(--crimson);border-bottom-color:var(--crimson)}
+  .tab.active .kind{border-color:var(--crimson);color:var(--crimson)}
+
+  /* ---------- main grid ---------- */
+  main{
+    max-width:1320px;margin:0 auto;padding:28px;
+    display:grid;grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);gap:32px;
+  }
+  @media (max-width:1050px){ main{grid-template-columns:minmax(0,1fr)} }
+
+  /* Guide mode: preview column is hidden, so collapse grid and let the form fill width */
+  main:has(> .preview-col.hidden){max-width:none;grid-template-columns:minmax(0,1fr)}
+
+  /* ---------- left column (form) ---------- */
+  .card{
+    background:#fff;
+    border:1px solid var(--rule);
+    border-radius:2px;
+  }
+  .card + .card{margin-top:18px}
+  .card-head{
+    padding:16px 22px 12px;
+    border-bottom:1px solid var(--rule);
+    display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  }
+  .card-head h2{
+    margin:0;font-family:"EB Garamond",Georgia,serif;font-weight:600;font-size:20px;
+    letter-spacing:.2px;
+  }
+  .card-head.with-tmpl{align-items:center}
+  .card-head .head-tools{
+    display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end;
+  }
+  .card-head .head-icon-btn{
+    appearance:none;background:#fff;border:1px solid var(--rule);border-radius:2px;
+    width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;
+    cursor:pointer;font-size:14px;line-height:1;color:#5b4a2c;padding:0;
+    transition:background .12s, border-color .12s, color .12s;
+  }
+  .card-head .head-icon-btn:hover{background:#fbf2dc;border-color:var(--crimson);color:var(--crimson)}
+  .card-head .head-icon-btn:active{transform:translateY(1px)}
+  .card-head .head-icon-btn:focus{outline:none;border-color:var(--crimson);box-shadow:0 0 0 2px rgba(140,21,21,.12)}
+  .card-head .head-tmpl{
+    appearance:none;-webkit-appearance:none;
+    font-family:"Source Sans 3",sans-serif;font-size:13px;
+    background:#fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%238c1515' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>") no-repeat right 9px center;
+    background-size:10px 7px;
+    border:1px solid var(--rule);border-radius:2px;
+    padding:6px 28px 6px 10px;color:#2a1f10;cursor:pointer;
+    width:180px;
+    max-width:180px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .card-head .head-tmpl:hover{border-color:var(--crimson)}
+  .card-head .head-tmpl:focus{outline:none;border-color:var(--crimson);box-shadow:0 0 0 2px rgba(140,21,21,.12)}
+  .card-head .eyebrow{
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1.5px;
+    color:var(--muted);text-transform:uppercase;
+  }
+  .card-body{padding:18px 22px 20px}
+
+  .field{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
+  .field label{
+    font-family:"Source Sans 3",sans-serif;font-size:11px;font-weight:600;
+    color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;
+  }
+  .field .hint{
+    font-size:12px;color:var(--muted);margin-bottom:2px;font-style:italic;
+  }
+  .field .hint-below{margin-top:4px;margin-bottom:0}
+  .roman-peek{
+    font-style:normal;font-family:"EB Garamond",Georgia,serif;
+    font-weight:600;color:var(--crimson);margin-left:4px;letter-spacing:.5px;
+  }
+  .roman-peek:not(:empty)::before{content:"→ "; color:var(--muted); font-weight:400}
+  .field input[type="text"], .field input[type="number"], .field textarea, .field select{
+    font-family:"Source Sans 3",sans-serif;font-size:14px;
+    background:#fff;border:1px solid var(--rule);border-radius:2px;
+    padding:8px 10px;color:var(--ink);outline:none;
+    transition:border-color .15s;
+    width:100%;
+    max-width:100%;
+    box-sizing:border-box;
+    min-width:0;
+  }
+  .field select{
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 10px center;
+    padding-right:28px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus{
+    border-color:var(--crimson);
+  }
+  .field textarea{min-height:70px;resize:vertical;line-height:1.5}
+
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .row.three{grid-template-columns:1fr 1fr 1fr}
+
+  /* informational rule/bylaw note inline in forms */
+  .rule-note{
+    display:flex;gap:10px;align-items:flex-start;
+    background:#f7ecd8;border:1px solid #e0c080;border-left:3px solid #c89a3d;
+    padding:10px 12px;margin:2px 0 14px;border-radius:2px;
+    font-size:13px;color:#5a3f0e;line-height:1.5;
+  }
+  .rule-note-mark{
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1.2px;
+    background:#fff;border:1px solid #e0c080;color:#7a4d0d;
+    padding:2px 6px;border-radius:2px;white-space:nowrap;flex-shrink:0;
+    margin-top:1px;
+  }
+  .rule-note b{color:#3a2807;font-weight:600}
+
+  /* clause list */
+  .clause{
+    border:1px solid var(--rule);background:#fff;
+    padding:12px 14px 10px;margin-bottom:10px;
+    position:relative;
+    border-left:3px solid var(--crimson);
+  }
+  .clause .chead{
+    display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;
+  }
+  .clause .kw{
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1.5px;
+    color:var(--crimson);font-weight:500;
+  }
+  .clause .idx{
+    font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--muted);
+  }
+  .clause textarea{
+    width:100%;
+    font-family:"Source Sans 3",sans-serif;font-size:13.5px;
+    background:transparent;border:none;padding:0;resize:vertical;outline:none;
+    color:var(--ink);line-height:1.5;min-height:56px;
+  }
+  .clause-actions{
+    display:flex;gap:6px;margin-top:4px;
+  }
+  .icon-btn{
+    appearance:none;background:transparent;border:1px solid var(--rule);
+    font-family:"JetBrains Mono",monospace;font-size:10px;
+    padding:2px 8px;cursor:pointer;color:var(--muted);border-radius:2px;
+    letter-spacing:.8px;
+  }
+  .icon-btn:hover{border-color:var(--ink);color:var(--ink)}
+  .icon-btn.del:hover{border-color:var(--crimson);color:var(--crimson)}
+
+  .add-btn{
+    appearance:none;background:#fff;border:1px dashed var(--rule-strong);
+    font-family:"Source Sans 3",sans-serif;font-size:12px;font-weight:600;
+    color:var(--muted);letter-spacing:.8px;
+    padding:8px 12px;cursor:pointer;border-radius:2px;
+    width:100%;
+  }
+  .add-btn:hover{border-color:var(--crimson);color:var(--crimson)}
+
+  .name-list{display:flex;flex-direction:column;gap:6px;margin-bottom:6px}
+  .name-row{display:flex;gap:6px;align-items:center}
+  .name-row input{
+    flex:1;font-family:"Source Sans 3",sans-serif;font-size:14px;
+    background:#fff;border:1px solid var(--rule);border-radius:2px;
+    padding:7px 10px;color:var(--ink);outline:none;
+  }
+  .name-row input:focus{border-color:var(--crimson)}
+  .name-row .rm{
+    appearance:none;background:#fff;border:1px solid var(--rule);
+    font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);
+    padding:0 10px;height:34px;cursor:pointer;border-radius:2px;
+  }
+  .name-row .rm:hover{border-color:var(--crimson);color:var(--crimson)}
+  .name-empty{font-size:12px;color:var(--muted);font-style:italic;padding:4px 2px}
+
+  /* ---------- compliance panel ---------- */
+  .compliance{
+    background:var(--paper-2);
+    border:1px solid var(--rule);
+    padding:14px 18px;margin-bottom:18px;
+  }
+  .compliance h3{
+    margin:0 0 8px;font-family:"Source Sans 3",sans-serif;font-size:11px;
+    font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);
+  }
+  .checklist{
+    list-style:none;margin:0;padding:0;
+    display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;
+  }
+  .checklist li{
+    font-size:13px;display:flex;align-items:flex-start;gap:8px;line-height:1.35;
+  }
+  .checklist .mark{
+    font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;
+    width:18px;display:inline-block;flex-shrink:0;text-align:center;
+    border-radius:2px;padding:1px 0;
+  }
+  .checklist .ok .mark{background:#e9ede3;color:#3f5c1e;border:1px solid #b9c9a4}
+  .checklist .warn .mark{background:#f7ecd8;color:#7a4d0d;border:1px solid #e0c080}
+  .checklist .info .mark{background:#eceef2;color:#5a5f6b;border:1px solid #c8cdd6}
+  .checklist .info{color:var(--muted)}
+  .checklist .ref{
+    font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--muted);
+    margin-left:4px;
+  }
+
+  /* ---------- toolbar ---------- */
+  .toolbar{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    padding:16px 22px;
+    margin-top:18px;
+    border:1px solid var(--rule);
+    border-radius:4px;
+    background:var(--paper-2);
+  }
+  .btn{
+    appearance:none;cursor:pointer;
+    font-family:"Source Sans 3",sans-serif;font-size:13px;font-weight:600;
+    letter-spacing:.5px;
+    padding:9px 18px;border-radius:2px;
+    border:1px solid var(--ink);background:#fff;color:var(--ink);
+    transition:background .15s, color .15s;
+  }
+  .btn:hover{background:var(--ink);color:#fff}
+  .btn.primary{background:var(--crimson);border-color:var(--crimson);color:#fff}
+  .btn.primary:hover{background:#6d1010;border-color:#6d1010}
+  .btn.primary.is-blocked{
+    background:#a88989;border-color:#a88989;color:#fff;
+    cursor:not-allowed;
+  }
+  .btn.primary.is-blocked:hover{background:#8d7272;border-color:#8d7272}
+  .blocked-note{color:var(--crimson);font-style:normal;font-weight:600;letter-spacing:.3px}
+  .btn.ghost{background:transparent;border-color:var(--rule-strong);color:var(--muted)}
+  .btn.ghost:hover{border-color:var(--ink);color:var(--ink);background:#fff}
+  .toolbar .spacer{flex:1}
+  .toolbar .note{font-size:12px;color:var(--muted);font-style:italic}
+
+  /* ---------- right column (preview) ---------- */
+  .preview-col{
+    position:sticky;top:18px;align-self:start;
+    height:calc(100vh - 36px);
+    display:flex;flex-direction:column;
+    min-width:0; /* allow children to shrink below content width */
+    overflow:hidden;
+  }
+  .preview-head{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;column-gap:24px;
+    margin-bottom:10px;flex-shrink:0;
+  }
+  .preview-head .tag{
+    grid-column:2; grid-row:1; justify-self:end; margin-right:12px;
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1.5px;
+    color:var(--muted);text-transform:uppercase;
+  }
+  .preview-head h3{ display:none; }
+  .preview-head .logo-switcher{ grid-column:1; grid-row:1; justify-self:start; margin-left:12px; }
+
+  /* Pro Mode: same layout — logos left, margins right */
+
+  .logo-switcher{
+    display:flex;align-items:center;gap:6px;
+    padding:3px 4px 3px 8px;border:1px solid var(--line);border-radius:8px;
+    background:var(--panel-alt, #fafafa);
+  }
+  .logo-switcher-label{
+    font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:1.5px;
+    color:var(--muted);text-transform:uppercase;margin-right:2px;
+  }
+  .logo-opt{
+    position:relative;
+    appearance:none;background:#fff;border:1px solid var(--line);border-radius:5px;
+    padding:0;cursor:pointer;width:44px;height:28px;
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .12s, box-shadow .12s, transform .12s;
+  }
+  .logo-opt img{max-width:90%;max-height:85%;object-fit:contain;display:block}
+  .logo-opt:hover{border-color:var(--muted)}
+  .logo-opt[aria-checked="true"]{
+    background:#efeae1;
+    border-color:var(--accent, #8b1f2e);
+    box-shadow:0 0 0 2px color-mix(in srgb, var(--accent, #8b1f2e) 18%, transparent);
+  }
+  /* Translucent caret on the selected family button (only for families with color variants) */
+  .logo-opt[aria-checked="true"][data-family="tw"]::after,
+  .logo-opt[aria-checked="true"][data-family="to"]::after{
+    content:"";
+    position:absolute;
+    right:3px;
+    top:2px;
+    width:0; height:0;
+    border-left:4px solid transparent;
+    border-right:4px solid transparent;
+    border-top:5px solid rgba(0,0,0,.35);
+    pointer-events:none;
+  }
+  .logo-color-row{
+    display:none;
+    position:fixed;
+    z-index:2147483646;
+    align-items:center;gap:6px;
+    padding:6px 8px 6px 10px;
+    border:1px solid var(--rule-strong);border-radius:8px;
+    background:#fff;
+    box-shadow:0 14px 30px rgba(0,0,0,.12), 0 2px 6px rgba(0,0,0,.06);
+  }
+  .logo-color-row.visible{display:inline-flex}
+  .logo-color-row::before{
+    content:"Colors";
+    font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:1.5px;
+    color:var(--muted);text-transform:uppercase;margin-right:4px;
+  }
+  .logo-color-opt{
+    appearance:none;background:#fff;border:1px solid var(--line);border-radius:5px;
+    padding:0;cursor:pointer;width:44px;height:28px;
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .12s, box-shadow .12s;
+  }
+  .logo-color-opt img{max-width:90%;max-height:85%;object-fit:contain;display:block}
+  .logo-color-opt:hover{border-color:var(--muted)}
+  .logo-color-opt[aria-checked="true"]{
+    border-color:var(--accent, #8b1f2e);
+    box-shadow:0 0 0 2px color-mix(in srgb, var(--accent, #8b1f2e) 18%, transparent);
+  }
+  .logo-color-options{
+    display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  }
+  .logo-color-options .color-label{
+    font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:1.5px;
+    color:var(--muted);text-transform:uppercase;margin-right:4px;
+  }
+  /* viewport: grey matte. Scrolls in both axes when the zoomed page exceeds it. */
+  .preview-viewport{
+    flex:1 1 auto;
+    min-height:0;
+    min-width:0;
+    width:100%;
+    overflow:auto;
+    overscroll-behavior:contain;
+    background:#e9e3de;
+    border:1px solid var(--rule);
+    padding:18px;
+    display:block;
+    box-sizing:border-box;
+  }
+  .preview-viewport::-webkit-scrollbar{width:10px;height:10px}
+  .preview-viewport::-webkit-scrollbar-track{background:transparent}
+  .preview-viewport::-webkit-scrollbar-thumb{
+    background:#c4b8b0;border:2px solid #e9e3de;border-radius:6px;
+  }
+  .preview-viewport::-webkit-scrollbar-thumb:hover{background:var(--crimson)}
+  /* shell centers horizontally when narrower than viewport, else left-aligns */
+  .doc-shell{
+    position:relative;
+    width:816px; /* JS overrides to scaled width */
+    margin:0 auto;
+  }
+  .doc{
+    /* Fixed US-Letter page: 8.5 x 11 in at 96dpi, 1in margins */
+    box-sizing:border-box;
+    width:816px;
+    min-height:1056px;
+    padding:96px;
+    transform-origin:top left;
+    background:#fff;
+    color:#000;
+    font-family:Georgia,serif;
+    font-size:11pt;line-height:1.15;
+    box-shadow:0 4px 24px rgba(0,0,0,.12);
+    position:absolute;
+    top:0;left:0;
+  }
+  .doc .hdr{text-align:right;font-family:Georgia,serif}
+  .doc .hdr img{width:249px;height:auto;display:inline-block;margin-bottom:0}
+  .doc .hdr[data-logo="horizontal"] img{width:290px;margin-bottom:44px}
+  .doc .hdr[data-family="to"] img{width:170px}
+  .doc .hdr .line{font-family:Georgia,serif;font-size:11pt;line-height:1.15;margin:0}
+  .doc .ctitle{
+    text-align:center;font-family:Georgia,serif;font-weight:bold;font-size:11pt;
+    margin:0;
+  }
+  .doc .ctr{text-align:center;font-family:Georgia,serif;font-size:11pt;margin:0}
+  .doc p{margin:0;font-family:Georgia,serif;font-size:11pt;line-height:1.15}.doc,.doc *{font-family:Georgia,serif !important;font-size:11pt !important}
+  .doc p.bold{font-weight:bold}
+  .doc p.center{text-align:center}
+  .doc .sig{margin-top:0}
+  .doc .sig .sig-space{height:64px}
+  .doc .sig .sigline{font-weight:bold;letter-spacing:1px}
+
+  /* footer */
+  footer{
+    max-width:1320px;margin:0 auto;padding:20px 28px 40px;
+    border-top:1px solid var(--rule);margin-top:24px;
+    font-size:12px;color:var(--muted);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+  .foot-credits{display:flex;flex-direction:column;gap:3px;text-align:center}
+  .foot-credit{font-size:11px;color:var(--muted)}
+
+  .hidden{display:none !important}
+  .kbd{
+    font-family:"JetBrains Mono",monospace;font-size:11px;
+    border:1px solid var(--rule);padding:1px 5px;border-radius:2px;
+    background:var(--paper-2);
+  }
+
+  .callout{
+    display:flex;gap:10px;align-items:flex-start;
+    padding:10px 12px;background:#fdf7ea;border-left:3px solid var(--gold);
+    font-size:12.5px;color:var(--ink-soft);margin-bottom:14px;
+  }
+  .callout .lab{
+    font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:600;
+    letter-spacing:1px;color:var(--warn);flex-shrink:0;padding-top:1px;
+  }
+
+  details.subtle{
+    border:1px solid var(--rule);padding:10px 14px;margin-bottom:14px;background:var(--paper-2);
+  }
+  details.subtle > summary{
+    cursor:pointer;font-weight:600;font-size:12px;letter-spacing:.8px;
+    text-transform:uppercase;color:var(--muted);
+  }
+  details.subtle[open] > summary{color:var(--ink);margin-bottom:8px}
+
+  /* ---------- compliance block modal ---------- */
+  .modal-backdrop{
+    position:fixed;inset:0;z-index:100;
+    background:rgba(28,22,18,.45);
+    display:none;align-items:center;justify-content:center;
+    padding:32px;
+    backdrop-filter:blur(2px);
+  }
+  .modal-backdrop.open{display:flex;animation:fade .15s ease-out}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .modal{
+    background:var(--paper);
+    border:1px solid var(--ink);
+    border-top:4px solid var(--crimson);
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+    width:min(520px, 100%);
+    font-family:"Source Sans 3",sans-serif;
+    animation:rise .18s ease-out;
+  }
+  @keyframes rise{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .modal-head{padding:22px 28px 10px;border-bottom:1px solid var(--rule)}
+  .modal-head .eyebrow{
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:2px;
+    text-transform:uppercase;color:var(--crimson);font-weight:600;
+  }
+  .modal-head h3{
+    margin:4px 0 0;font-family:"EB Garamond",Georgia,serif;
+    font-size:22px;font-weight:600;color:var(--ink);
+  }
+  .modal-body{padding:18px 28px 4px}
+  .modal-intro{margin:0 0 14px;font-size:14px;color:var(--ink);line-height:1.5}
+  .modal-foot{margin:14px 0 4px;font-size:12px;color:var(--muted);font-style:italic}
+  .modal-fails{
+    list-style:none;margin:0;padding:0;
+    border:1px solid var(--rule);background:var(--paper-2);
+  }
+  .modal-fails li{
+    display:flex;align-items:flex-start;gap:10px;
+    padding:10px 14px;font-size:13px;line-height:1.4;
+    border-bottom:1px solid var(--rule);
+  }
+  .modal-fails li:last-child{border-bottom:0}
+  .modal-fails .x{
+    font-family:"JetBrains Mono",monospace;font-weight:700;font-size:12px;
+    color:var(--crimson);width:16px;flex-shrink:0;text-align:center;
+    padding-top:1px;
+  }
+  .modal-fails .ref{
+    font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--muted);
+    margin-left:4px;
+  }
+  .modal-actions{
+    padding:14px 28px 22px;display:flex;justify-content:flex-end;gap:10px;
+  }
+
+  /* footer link */
+  .foot-link{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:"EB Garamond",Georgia,serif;
+    font-size:13px;font-weight:600;color:var(--crimson);
+    text-decoration:none;border-bottom:1px solid transparent;
+    transition:border-color .15s;
+  }
+  .foot-link:hover{border-bottom-color:var(--crimson)}
+  .foot-link span{font-family:"Source Sans 3",sans-serif;font-weight:400;font-size:11px}
+
+  /* "What is a …" definition card */
+  .definition-card{
+    background:#fdf7ee;border:1px solid #e3d5ba;border-left:4px solid var(--crimson);
+    border-radius:8px;padding:18px 22px;margin-bottom:18px;
+  }
+  .definition-card h3{
+    font-family:"EB Garamond",Georgia,serif;font-size:20px;margin:0 0 6px;
+    color:var(--crimson);letter-spacing:.01em;text-align:center;
+  }
+  .definition-card .def-ref{
+    display:inline-block;font-family:"Source Sans 3",sans-serif;font-size:11px;
+    font-weight:600;color:#8a6d3a;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;
+  }
+  .definition-card p{
+    font-family:"Source Sans 3",sans-serif;font-size:14px;line-height:1.55;
+    color:#333;margin:0 0 8px;
+  }
+  .definition-card p:last-child{margin-bottom:0}
+  .definition-card blockquote{
+    font-family:"EB Garamond",Georgia,serif;font-style:italic;font-size:14.5px;
+    line-height:1.55;color:#2a1f10;border-left:2px solid #c9b48a;
+    margin:6px 0 0;padding:2px 0 2px 12px;
+  }
+
+  /* Legislation Guide tab */
+  .form-col.guide-mode{max-width:none}
+  .guide-panel{
+    background:#fff;border:1px solid var(--border);border-radius:10px;
+    padding:36px 44px 40px;max-width:860px;margin:0 auto 40px;
+    box-shadow:0 1px 2px rgba(0,0,0,.03);
+  }
+  @media (orientation: landscape){
+    .guide-panel{max-width:min(1400px, 94vw);padding:44px 64px 52px}
+    .guide-panel p{font-size:16px;line-height:1.75}
+  }
+  .guide-panel .guide-eyebrow{
+    display:block;font-family:"Source Sans 3",sans-serif;font-size:11px;font-weight:700;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--crimson);margin-bottom:6px;
+  }
+  .guide-panel h1{
+    font-family:"EB Garamond",Georgia,serif;font-size:34px;font-weight:600;
+    margin:0 0 4px;color:#111;letter-spacing:.005em;
+  }
+  .guide-panel .guide-source{
+    font-family:"Source Sans 3",sans-serif;font-size:12px;color:#6b6257;
+    margin:0 0 28px;
+  }
+  .guide-panel h2{
+    font-family:"EB Garamond",Georgia,serif;font-size:22px;font-weight:600;
+    margin:28px 0 6px;color:#1a1a1a;border-bottom:1px solid #e6dfd2;padding-bottom:6px;
+  }
+  .guide-panel h2:first-of-type{margin-top:14px}
+  .guide-panel h3{
+    font-family:"EB Garamond",Georgia,serif;font-size:17px;font-weight:600;
+    margin:18px 0 4px;color:#2a2a2a;font-style:italic;
+  }
+  .guide-panel p{
+    font-family:"Source Sans 3",sans-serif;font-size:15px;line-height:1.7;
+    color:#333;margin:0 0 12px;text-wrap:pretty;
+  }
+  .guide-panel p b{color:#111}
+
+  /* ---------- Template picker ---------- */
+  .tmpl-card{
+    background:#fbf8f1;
+    border:1px solid #e3d5ba;
+    border-left:4px solid var(--crimson);
+    border-radius:8px;
+    padding:14px 18px 16px;
+    margin-bottom:18px;
+  }
+  .tmpl-head{
+    display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+    margin-bottom:10px;
+  }
+  .tmpl-head h3{
+    font-family:"EB Garamond",Georgia,serif;font-size:18px;margin:0;
+    color:var(--crimson);font-weight:600;letter-spacing:.01em;
+  }
+  .tmpl-head .tmpl-eyebrow{
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1.5px;
+    color:var(--muted);text-transform:uppercase;
+  }
+  .tmpl-hint{
+    font-family:"Source Sans 3",sans-serif;font-size:12.5px;line-height:1.45;
+    color:#5b4a2c;margin:0 0 10px;
+  }
+  .tmpl-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;
+  }
+  .tmpl-chip{
+    appearance:none;background:#fffaf1;border:1px solid #d9c7a4;border-radius:6px;
+    padding:9px 12px;text-align:left;cursor:pointer;
+    font-family:"Source Sans 3",sans-serif;font-size:13px;color:#2a1f10;
+    line-height:1.3;transition:background .12s, border-color .12s, transform .08s;
+    display:flex;flex-direction:column;gap:2px;
+  }
+  .tmpl-chip:hover{background:#fff3dc;border-color:var(--crimson)}
+  .tmpl-chip:active{transform:translateY(1px)}
+  .tmpl-chip .tlabel{font-weight:600;letter-spacing:.01em}
+  .tmpl-chip .tdesc{font-size:11.5px;color:#7a6336;line-height:1.35}
+  .tmpl-chip[data-blank=true]{background:#f3eee2;border-style:dashed}
+  body.pro-mode .tmpl-card{
+    background:transparent;border:1px solid var(--rule);border-left-color:var(--rule);
+  }
+  body.pro-mode .tmpl-head h3{color:var(--ink)}
+  body.pro-mode .tmpl-hint{display:none}
+
+  /* Confirmation modal reuse */
+  #tmpl-confirm{
+    position:fixed;inset:0;background:rgba(20,15,8,.5);z-index:9999;
+    display:none;align-items:center;justify-content:center;padding:20px;
+  }
+  #tmpl-confirm.open{display:flex}
+  #tmpl-confirm .mbox{
+    background:#fff;border:1px solid var(--rule);border-radius:8px;
+    max-width:440px;width:100%;padding:22px 24px;font-family:"Source Sans 3",sans-serif;
+    box-shadow:0 18px 60px rgba(0,0,0,.25);
+  }
+  #tmpl-confirm h3{
+    font-family:"EB Garamond",Georgia,serif;font-size:22px;margin:0 0 8px;color:var(--crimson);
+  }
+  #tmpl-confirm p{margin:0 0 16px;color:#333;font-size:14px;line-height:1.5}
+  #tmpl-confirm .acts{display:flex;justify-content:flex-end;gap:8px}
+
+  /* Template prompt modal (save / rename) */
+  #tmpl-prompt{
+    position:fixed;inset:0;background:rgba(20,15,8,.5);z-index:9999;
+    display:none;align-items:center;justify-content:center;padding:20px;
+  }
+  #tmpl-prompt.open{display:flex}
+  #tmpl-prompt .mbox{
+    background:#fff;border:1px solid var(--rule);border-radius:8px;
+    max-width:440px;width:100%;padding:22px 24px;font-family:"Source Sans 3",sans-serif;
+    box-shadow:0 18px 60px rgba(0,0,0,.25);
+  }
+  #tmpl-prompt h3{
+    font-family:"EB Garamond",Georgia,serif;font-size:22px;margin:0 0 8px;color:var(--crimson);
+  }
+  #tmpl-prompt p{margin:0 0 14px;color:#333;font-size:14px;line-height:1.5}
+  #tmpl-prompt input[type=text]{
+    width:100%;font-family:"Source Sans 3",sans-serif;font-size:14px;
+    background:#fff;border:1px solid var(--rule);border-radius:2px;
+    padding:8px 10px;margin-bottom:14px;
+  }
+  #tmpl-prompt input[type=text]:focus{outline:none;border-color:var(--crimson)}
+  #tmpl-prompt .acts{display:flex;justify-content:flex-end;gap:8px}
+
+  /* Template manager floating row inside dropdown menu — we render as modal list */
+  #tmpl-manage{
+    position:fixed;inset:0;background:rgba(20,15,8,.5);z-index:9999;
+    display:none;align-items:center;justify-content:center;padding:20px;
+  }
+  #tmpl-manage.open{display:flex}
+  #tmpl-manage .mbox{
+    background:#fff;border:1px solid var(--rule);border-radius:8px;
+    max-width:520px;width:100%;padding:22px 24px;font-family:"Source Sans 3",sans-serif;
+    box-shadow:0 18px 60px rgba(0,0,0,.25);
+  }
+  #tmpl-manage h3{
+    font-family:"EB Garamond",Georgia,serif;font-size:22px;margin:0 0 4px;color:var(--crimson);
+  }
+  #tmpl-manage .sub{font-size:12px;color:var(--muted);margin:0 0 14px}
+  #tmpl-manage .tmpl-row{
+    display:flex;align-items:center;gap:8px;padding:8px 10px;
+    border:1px solid var(--rule);border-radius:3px;margin-bottom:6px;background:#fbf8f1;
+  }
+  #tmpl-manage .tmpl-row .tname{flex:1;font-size:14px;color:#2a1f10;font-weight:500}
+  #tmpl-manage .tmpl-row .row-icon{
+    appearance:none;background:transparent;border:none;cursor:pointer;
+    color:var(--muted);font-size:13px;padding:4px 8px;border-radius:2px;
+  }
+  #tmpl-manage .tmpl-row .row-icon:hover{background:#fff;color:var(--crimson)}
+  #tmpl-manage .empty{font-size:13px;color:var(--muted);font-style:italic;padding:12px 0}
+  #tmpl-manage .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+
+  /* Identification card-head toolbar */
+  .card-head .head-tools{
+    display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end;
+  }
+  .card-head .head-icon-btn{
+    appearance:none;background:#fff;border:1px solid var(--rule);
+    width:30px;height:30px;border-radius:4px;cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:14px;line-height:1;color:#5a4a2a;
+    transition:border-color .15s, color .15s, background .15s;
+  }
+  .card-head .head-icon-btn:hover{
+    border-color:var(--crimson);color:var(--crimson);background:#fbf8f1;
+  }
+  .card-head .head-icon-btn:active{transform:translateY(1px)}
+
+  /* Generic prompt + alert + manage modals (share .mbox base look) */
+  #generic-prompt, #generic-alert, #tmpl-manage{
+    position:fixed;inset:0;background:rgba(20,15,8,.5);z-index:9999;
+    display:none;align-items:center;justify-content:center;padding:20px;
+  }
+  #generic-prompt.open, #generic-alert.open{display:flex}
+  #generic-prompt .mbox, #generic-alert .mbox{
+    background:#fff;border:1px solid var(--rule);border-radius:8px;
+    max-width:440px;width:100%;padding:22px 24px;font-family:"Source Sans 3",sans-serif;
+    box-shadow:0 18px 60px rgba(0,0,0,.25);
+  }
+  #generic-prompt .mtitle, #generic-alert .mtitle{
+    font-family:"EB Garamond",Georgia,serif;font-size:22px;margin:0 0 8px;color:var(--crimson);
+  }
+  #generic-prompt .mlabel{
+    display:block;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin:4px 0 6px;
+  }
+  #generic-prompt .minput{
+    width:100%;font-family:"Source Sans 3",sans-serif;font-size:14px;
+    background:#fff;border:1px solid var(--rule);border-radius:2px;
+    padding:8px 10px;margin-bottom:14px;
+  }
+  #generic-prompt .minput:focus{outline:none;border-color:var(--crimson)}
+  #generic-prompt .acts, #generic-alert .acts{display:flex;justify-content:flex-end;gap:8px}
+  #generic-alert .mmsg{margin:0 0 16px;color:#333;font-size:14px;line-height:1.5}
+
+  /* Manage modal — wide variant + new row layout */
+  #tmpl-manage .mbox-wide{
+    background:#fff;border:1px solid var(--rule);border-radius:8px;
+    max-width:560px;width:100%;padding:22px 24px;font-family:"Source Sans 3",sans-serif;
+    box-shadow:0 18px 60px rgba(0,0,0,.25);
+  }
+  #tmpl-manage .mbox-wide h3{
+    font-family:"EB Garamond",Georgia,serif;font-size:22px;margin:0 0 4px;color:var(--crimson);
+  }
+  #tmpl-manage .mp{font-size:12px;color:var(--muted);margin:0 0 14px}
+  #tmpl-manage .mp .kindword{text-transform:capitalize}
+  #tmpl-manage .manage-list{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow:auto}
+  #tmpl-manage .manage-row{
+    display:flex;align-items:center;gap:8px;padding:8px 10px;
+    border:1px solid var(--rule);border-radius:3px;background:#fbf8f1;
+  }
+  #tmpl-manage .manage-name{
+    flex:1;font-family:"Source Sans 3",sans-serif;font-size:14px;
+    background:#fff;border:1px solid var(--rule);border-radius:2px;
+    padding:6px 8px;
+  }
+  #tmpl-manage .manage-name:focus{outline:none;border-color:var(--crimson)}
+  #tmpl-manage .manage-btn{
+    appearance:none;background:#fff;border:1px solid var(--rule);
+    font-family:"Source Sans 3",sans-serif;font-size:12px;
+    padding:6px 10px;border-radius:3px;cursor:pointer;color:#5a4a2a;
+  }
+  #tmpl-manage .manage-btn:hover{border-color:var(--crimson);color:var(--crimson)}
+  #tmpl-manage .manage-delete:hover{border-color:#a33;color:#a33}
+  #tmpl-manage .manage-empty{font-size:13px;color:var(--muted);font-style:italic;padding:12px 0;text-align:center}
+
+  /* Toast */
+  #app-toast{
+    position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);
+    background:#2a1f10;color:#fbf8f1;font-family:"Source Sans 3",sans-serif;font-size:13px;
+    padding:10px 18px;border-radius:24px;box-shadow:0 8px 24px rgba(0,0,0,.25);
+    opacity:0;pointer-events:none;transition:opacity .2s, transform .2s;z-index:10000;
+    max-width:80vw;text-align:center;
+  }
+  #app-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+<style wxt-shadow-root-document-styles="oub7sa697ta">@property --tw-animation-delay{syntax:"*";inherits:false;initial-value:0s}@property --tw-animation-direction{syntax:"*";inherits:false;initial-value:normal}@property --tw-animation-duration{syntax:"*";inherits:false}@property --tw-animation-fill-mode{syntax:"*";inherits:false;initial-value:none}@property --tw-animation-iteration-count{syntax:"*";inherits:false;initial-value:1}@property --tw-enter-blur{syntax:"*";inherits:false;initial-value:0}@property --tw-enter-opacity{syntax:"*";inherits:false;initial-value:1}@property --tw-enter-rotate{syntax:"*";inherits:false;initial-value:0}@property --tw-enter-scale{syntax:"*";inherits:false;initial-value:1}@property --tw-enter-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-enter-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-exit-blur{syntax:"*";inherits:false;initial-value:0}@property --tw-exit-opacity{syntax:"*";inherits:false;initial-value:1}@property --tw-exit-rotate{syntax:"*";inherits:false;initial-value:0}@property --tw-exit-scale{syntax:"*";inherits:false;initial-value:1}@property --tw-exit-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-exit-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-z{syntax:"*";inherits:false;initial-value:0}@property --tw-scale-x{syntax:"*";inherits:false;initial-value:1}@property --tw-scale-y{syntax:"*";inherits:false;initial-value:1}@property --tw-scale-z{syntax:"*";inherits:false;initial-value:1}@property --tw-rotate-x{syntax:"*";inherits:false}@property --tw-rotate-y{syntax:"*";inherits:false}@property --tw-rotate-z{syntax:"*";inherits:false}@property --tw-skew-x{syntax:"*";inherits:false}@property --tw-skew-y{syntax:"*";inherits:false}@property --tw-pan-x{syntax:"*";inherits:false}@property --tw-pan-y{syntax:"*";inherits:false}@property --tw-pinch-zoom{syntax:"*";inherits:false}@property --tw-space-y-reverse{syntax:"*";inherits:false;initial-value:0}@property --tw-space-x-reverse{syntax:"*";inherits:false;initial-value:0}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-gradient-position{syntax:"*";inherits:false}@property --tw-gradient-from{syntax:"<color>";inherits:false;initial-value:#0000}@property --tw-gradient-via{syntax:"<color>";inherits:false;initial-value:#0000}@property --tw-gradient-to{syntax:"<color>";inherits:false;initial-value:#0000}@property --tw-gradient-stops{syntax:"*";inherits:false}@property --tw-gradient-via-stops{syntax:"*";inherits:false}@property --tw-gradient-from-position{syntax:"<length-percentage>";inherits:false;initial-value:0%}@property --tw-gradient-via-position{syntax:"<length-percentage>";inherits:false;initial-value:50%}@property --tw-gradient-to-position{syntax:"<length-percentage>";inherits:false;initial-value:100%}@property --tw-leading{syntax:"*";inherits:false}@property --tw-font-weight{syntax:"*";inherits:false}@property --tw-tracking{syntax:"*";inherits:false}@property --tw-ordinal{syntax:"*";inherits:false}@property --tw-slashed-zero{syntax:"*";inherits:false}@property --tw-numeric-figure{syntax:"*";inherits:false}@property --tw-numeric-spacing{syntax:"*";inherits:false}@property --tw-numeric-fraction{syntax:"*";inherits:false}@property --tw-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-shadow-color{syntax:"*";inherits:false}@property --tw-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-inset-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-inset-shadow-color{syntax:"*";inherits:false}@property --tw-inset-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-ring-color{syntax:"*";inherits:false}@property --tw-ring-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-inset-ring-color{syntax:"*";inherits:false}@property --tw-inset-ring-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-ring-inset{syntax:"*";inherits:false}@property --tw-ring-offset-width{syntax:"<length>";inherits:false;initial-value:0}@property --tw-ring-offset-color{syntax:"*";inherits:false;initial-value:#fff}@property --tw-ring-offset-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-outline-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-blur{syntax:"*";inherits:false}@property --tw-brightness{syntax:"*";inherits:false}@property --tw-contrast{syntax:"*";inherits:false}@property --tw-grayscale{syntax:"*";inherits:false}@property --tw-hue-rotate{syntax:"*";inherits:false}@property --tw-invert{syntax:"*";inherits:false}@property --tw-opacity{syntax:"*";inherits:false}@property --tw-saturate{syntax:"*";inherits:false}@property --tw-sepia{syntax:"*";inherits:false}@property --tw-drop-shadow{syntax:"*";inherits:false}@property --tw-drop-shadow-color{syntax:"*";inherits:false}@property --tw-drop-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-drop-shadow-size{syntax:"*";inherits:false}@property --tw-backdrop-blur{syntax:"*";inherits:false}@property --tw-backdrop-brightness{syntax:"*";inherits:false}@property --tw-backdrop-contrast{syntax:"*";inherits:false}@property --tw-backdrop-grayscale{syntax:"*";inherits:false}@property --tw-backdrop-hue-rotate{syntax:"*";inherits:false}@property --tw-backdrop-invert{syntax:"*";inherits:false}@property --tw-backdrop-opacity{syntax:"*";inherits:false}@property --tw-backdrop-saturate{syntax:"*";inherits:false}@property --tw-backdrop-sepia{syntax:"*";inherits:false}@property --tw-duration{syntax:"*";inherits:false}@property --tw-ease{syntax:"*";inherits:false}@property --tw-text-shadow-color{syntax:"*";inherits:false}@property --tw-text-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-content{syntax:"*";inherits:false;initial-value:""}</style></head>
+<body style="cursor: crosshair; font-family: &quot;Times New Roman&quot;;" data-cc-id="cc-1"><bettercanvas-portal style="overflow: visible; position: relative; width: 0px; height: 0px; display: block;"></bettercanvas-portal>
+
+<!-- Logo asset preload. Every logo path used by the exporter is referenced here
+     as a real <img src> so the standalone-HTML bundler picks it up and rewrites
+     to a blob: URL at pack time. loadLogoBuffer() looks these up by
+     data-logo-asset so it always fetches the bundled bytes (in standalone) or
+     the live file (in dev), never a baked-in snapshot. -->
+<div aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none">
+  <img data-logo-asset="assets/logo1-red-red.png"        src="assets/logo1-red-red.png"        alt="">
+  <img data-logo-asset="assets/logo1-black-red.png"      src="assets/logo1-black-red.png"      alt="">
+  <img data-logo-asset="assets/logo1-black-black.png"    src="assets/logo1-black-black.png"    alt="">
+  <img data-logo-asset="assets/logo1-yellow-red.png"     src="assets/logo1-yellow-red.png"     alt="">
+  <img data-logo-asset="assets/logo1-yellow-yellow.png"  src="assets/logo1-yellow-yellow.png"  alt="">
+  <img data-logo-asset="assets/logo1-red-gold-v2.png"      src="assets/logo1-red-gold-v2.png"      alt="">
+  <img data-logo-asset="assets/logo2-red-yellow.png"    src="assets/logo2-red-yellow.png"    alt="">
+  <img data-logo-asset="assets/logo2-red.png"           src="assets/logo2-red.png"           alt="">
+  <img data-logo-asset="assets/logo2-black.png"         src="assets/logo2-black.png"         alt="">
+  <img data-logo-asset="assets/logo2-gold-red-du.png"      src="assets/logo2-gold-red-du.png"      alt="">
+</div>
+
+<div class="masthead">
+  <div class="masthead-inner">
+    <div class="brand">
+      <span class="title">Legislative &amp; Formatting Guide</span>
+    </div>
+    <div class="masthead-divider" aria-hidden="true"></div>
+    <div class="identity">
+      <img class="identity-logo" src="assets/logo-3clr.jpg" alt="University of Denver — Undergraduate Student Government"/>
+    </div>
+  </div>
+  <div class="settings-dropdown" id="settings-dd">
+    <button type="button" class="settings-trigger" id="settings-trigger" aria-haspopup="true" aria-expanded="false" aria-label="Settings" title="Settings">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" stroke-width="1.6"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="settings-menu" id="settings-menu" role="menu">
+      <div class="settings-section-label">Account</div>
+      <div class="settings-row settings-auth" id="auth-box"></div>
+      <div class="settings-sep" role="separator"></div>
+      <label class="settings-row">
+        <span class="settings-row-main">
+          <span class="settings-row-label">Pro Mode</span>
+          <span class="settings-row-desc">Hide tutorials, hints, and compliance warnings.</span>
+        </span>
+        <span class="pro-toggle" aria-hidden="true">
+          <input type="checkbox" id="pro-mode-toggle">
+          <span class="pt-track"></span>
+        </span>
+      </label>
+    </div>
+  </div>
+</div>
+<div class="crimson-bar"></div>
+
+<div class="tab-strip">
+  <div class="tab-strip-inner">
+    <button class="tab active" data-tab="amendment">Amendment</button>
+    <button class="tab" data-tab="bill">Bill</button>
+    <button class="tab" data-tab="resolution">Resolution</button>
+    <button class="tab" data-tab="guide">Legislation Guide</button>
+  </div>
+</div>
+
+<main>
+  <!-- ============ LEFT: FORM ============ -->
+  <div class="form-col">
+
+    <div class="settings-bar">
+      <div class="pro-mode-banner">Pro Mode</div>
+    </div>
+
+    <!-- ===== BILL ===== -->
+    <section class="form-panel hidden" data-panel="bill">
+
+      <div class="definition-card">
+        <h3>What is a Bill?</h3>
+        <span class="def-ref">From the USG Bylaws · Art. III, §6.2</span>
+        <blockquote>A bill is a binding piece of legislation that can appropriate funds, create or dissolve positions within the Executive Branch and create or change the policies of the USG, both internal and external. A 2/3 majority vote is required for passage. If a funding request fails via vote, that bill may be up for immediate reconsideration via a vote in the same week, following a further discussion and debate period.</blockquote>
+      </div>
+
+      <div class="compliance">
+        <h3>Required Fields</h3>
+        <ul class="checklist" id="bill-checks"><li class="warn"><span class="mark">!</span><span>Bill number assigned</span></li><li class="warn"><span class="mark">!</span><span>Academic year set</span></li><li class="warn"><span class="mark">!</span><span>Subject line present</span></li><li class="warn"><span class="mark">!</span><span>At least one author</span></li><li class="warn"><span class="mark">!</span><span>≥1 WHEREAS clause</span></li><li class="warn"><span class="mark">!</span><span>≥1 RESOLVED clause</span></li><li class="warn"><span class="mark">!</span><span>Date of passage set</span></li><li class="warn"><span class="mark">!</span><span>President (signatory) specified</span></li></ul>
+      </div>
+
+      <div class="card">
+        <div class="card-head with-tmpl">
+          <h2>Identification</h2>
+          <div class="head-tools">
+            <select id="b_tmpl_select" class="tmpl-select head-tmpl" title="Apply a saved template"></select>
+            <button class="head-icon-btn" data-tmpl-import-docx="bill" title="Import bill from a .docx file" aria-label="Import DOCX">⬆</button>
+            <input type="file" data-tmpl-docx-input="bill" accept=".docx" hidden>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="field">
+              <label>Bill Number</label>
+              <input type="text" id="b_number" value="" placeholder="e.g. 57">
+            </div>
+            <div class="field">
+              <label>Academic Year</label>
+              <input type="text" id="b_year" value="" placeholder="e.g. 2026-2027">
+            </div>
+          </div>
+
+
+          <div class="field">
+            <label>Subject Line</label>
+            <span class="hint">Appears after "A BILL … CONCERNING". Automatically formatted in ALL CAPS.</span>
+            <input type="text" id="b_subject" value="" placeholder="e.g. AN ACT TO ESTABLISH ..." style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label>Author(s)</label>
+              <div class="name-list" id="b_authors_list"><div class="name-empty">None — click “Add” below.</div></div>
+              <button class="add-btn" data-add-name="b_authors">＋ Add author</button>
+            </div>
+            <div class="field">
+              <label>Co-Sponsor(s)</label>
+              <div class="name-list" id="b_cosponsors_list"><div class="name-empty">None — click “Add” below.</div></div>
+              <button class="add-btn" data-add-name="b_cosponsors">＋ Add co-sponsor</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Preamble — <em>WHEREAS</em></h2>
+          <span class="eyebrow">Context &amp; justification</span>
+        </div>
+        <div class="card-body">
+          <div id="b_whereas"><div class="clause">
+    <div class="chead">
+      <span class="kw">WHEREAS · 01</span>
+      <div class="clause-actions">
+        <button class="icon-btn" data-dir="-1" title="Move up">▲</button>
+        <button class="icon-btn" data-dir="1" title="Move down">▼</button>
+        <button class="icon-btn del" title="Remove">✕ remove</button>
+      </div>
+    </div>
+    <textarea rows="3"></textarea>
+  </div></div>
+          <button class="add-btn" data-add="b_whereas">＋ Add WHEREAS clause</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Operative — <em>BE IT ENACTED</em></h2>
+          <span class="eyebrow">Actions taken by the body</span>
+        </div>
+        <div class="card-body">
+          <div id="b_resolved"><div class="clause">
+    <div class="chead">
+      <span class="kw">BE IT ENACTED · 01</span>
+      <div class="clause-actions">
+        <button class="icon-btn" data-dir="-1" title="Move up">▲</button>
+        <button class="icon-btn" data-dir="1" title="Move down">▼</button>
+        <button class="icon-btn del" title="Remove">✕ remove</button>
+      </div>
+    </div>
+    <textarea rows="3"></textarea>
+  </div></div>
+          <button class="add-btn" data-add="b_resolved">＋ Add ENACTED clause</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Enactment &amp; Signature</h2>
+          <span class="eyebrow">Passage block</span>
+        </div>
+        <div class="card-body">
+          <div class="callout">
+            <span class="lab">NOTICE</span>
+            <span>Upon passage by Senate, this bill is turned over to the USG President for signature or veto within <strong>48 hours</strong>. Senate may override a veto by a <strong>3/4 vote</strong>. <span class="ref">(Art. III §6.4)</span></span>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label>Date of Passage</label>
+              <input type="date" id="b_date" value="">
+              <span class="hint hint-below">Set to date Senate will vote on this bill.</span>
+            </div>
+            <div class="field">
+              <label>USG President (signatory)</label>
+              <input type="text" id="b_president" value="" placeholder="Full name">
+            </div>
+          </div>
+        </div>
+        <div class="toolbar">
+          <button class="btn primary is-blocked" data-download="bill" data-blocked="1">⬇ Download Bill (.docx)</button>
+          <button class="btn ghost" data-tmpl-save="bill">⭐ Save as Template</button>
+          <button class="btn ghost" data-reset="bill">Reset</button>
+          <span class="spacer"></span>
+          <span class="note"><span class="blocked-note">⚠ 9 bylaw checks failing — resolve before download.</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== RESOLUTION ===== -->
+    <section class="form-panel hidden" data-panel="resolution">
+
+      <div class="definition-card">
+        <h3>What is a Resolution?</h3>
+        <span class="def-ref">From the USG Bylaws · Art. III, §6.3</span>
+        <blockquote>A resolution is a non-binding piece of legislation that can express the sentiment of the body on an issue, discuss new circumstances that highlight old policy, or underscore other matters of symbolic importance. A resolution must have a 3/4 vote to pass.<br><br>A senator may present issues regarding the student body within Senate, however, a resolution must begin within a respective committee and authored by senator(s) within said committee (i.e., matters involving Student Orgs shall have resolutions originating within Student Orgs Committee). The committee shall deliberate, research, and refine the resolution before the committee chair shall host a vote amongst its members on whether to introduce the resolution to the floor of the Senate. For resolutions that do not fall cleanly within the purview of any one committee, a minimum of three senators must be involved in the authoring, research, and presentation.</blockquote>
+      </div>
+
+      <div class="compliance">
+        <h3>Required Fields</h3>
+        <ul class="checklist" id="res-checks"><li class="warn"><span class="mark">!</span><span>Resolution number assigned</span></li><li class="warn"><span class="mark">!</span><span>Academic year set</span></li><li class="warn"><span class="mark">!</span><span>Regarding / subject present</span></li><li class="warn"><span class="mark">!</span><span>At least one author</span></li><li class="warn"><span class="mark">!</span><span>≥1 WHEREAS clause</span></li><li class="warn"><span class="mark">!</span><span>≥1 RESOLVED clause</span></li><li class="warn"><span class="mark">!</span><span>Date of passage set</span></li><li class="warn"><span class="mark">!</span><span>President (signatory) specified</span></li></ul>
+      </div>
+
+      <div class="card">
+        <div class="card-head with-tmpl">
+          <h2>Identification</h2>
+          <div class="head-tools">
+            <select id="r_tmpl_select" class="tmpl-select head-tmpl" title="Apply a saved template"></select>
+            <button class="head-icon-btn" data-tmpl-import-docx="resolution" title="Import resolution from a .docx file" aria-label="Import DOCX">⬆</button>
+            <input type="file" data-tmpl-docx-input="resolution" accept=".docx" hidden>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="field">
+              <label>Resolution Number</label>
+              <input type="number" min="1" max="3999" step="1" id="r_number" value="" placeholder="e.g. 2">
+              <span class="hint hint-below">Auto-converted to Roman numerals <span id="r_number_preview" class="roman-peek"></span></span>
+            </div>
+            <div class="field">
+              <label>Academic Year</label>
+              <input type="text" id="r_year" value="" placeholder="e.g. 2026-2027">
+            </div>
+          </div>
+
+          <div class="rule-note">
+            <span class="rule-note-mark">§6.3</span>
+            <span><b>Every resolution must follow one of two paths:</b><br>
+              <b>① Committee-based</b> — the resolution originates <b>within the committee</b> whose subject area it falls under, and is <b>authored by a senator on that committee</b>. The committee deliberates, researches, and refines the resolution, then votes on whether to send it to the Senate floor.<br>
+              <b>② Three-senator coalition</b> — if the subject doesn't fit cleanly within any single committee, a minimum of <b>three senators</b> must be involved in the <b>authoring, research, and presentation</b> of the resolution.
+            </span>
+          </div>
+
+          <div class="field">
+            <label>Regarding / Subject</label>
+            <span class="hint">Appears after "REGARDING". Automatically formatted in ALL CAPS.</span>
+            <input type="text" id="r_subject" value="" placeholder="e.g. SUPPORT FOR ..." style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label>Author(s)</label>
+              <div class="name-list" id="r_authors_list"><div class="name-empty">None — click “Add” below.</div></div>
+              <button class="add-btn" data-add-name="r_authors">＋ Add author</button>
+            </div>
+            <div class="field">
+              <label>Co-Sponsor(s)</label>
+              <div class="name-list" id="r_cosponsors_list"><div class="name-empty">None — click “Add” below.</div></div>
+              <button class="add-btn" data-add-name="r_cosponsors">＋ Add co-sponsor</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Preamble — <em>WHEREAS</em></h2>
+          <span class="eyebrow">Findings of the body</span>
+        </div>
+        <div class="card-body">
+          <div id="r_whereas"><div class="clause">
+    <div class="chead">
+      <span class="kw">WHEREAS · 01</span>
+      <div class="clause-actions">
+        <button class="icon-btn" data-dir="-1" title="Move up">▲</button>
+        <button class="icon-btn" data-dir="1" title="Move down">▼</button>
+        <button class="icon-btn del" title="Remove">✕ remove</button>
+      </div>
+    </div>
+    <textarea rows="3"></textarea>
+  </div></div>
+          <button class="add-btn" data-add="r_whereas">＋ Add WHEREAS clause</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Operative — <em>BE IT RESOLVED</em></h2>
+          <span class="eyebrow">Position of the body</span>
+        </div>
+        <div class="card-body">
+          <div id="r_resolved"><div class="clause">
+    <div class="chead">
+      <span class="kw">BE IT RESOLVED · 01</span>
+      <div class="clause-actions">
+        <button class="icon-btn" data-dir="-1" title="Move up">▲</button>
+        <button class="icon-btn" data-dir="1" title="Move down">▼</button>
+        <button class="icon-btn del" title="Remove">✕ remove</button>
+      </div>
+    </div>
+    <textarea rows="3"></textarea>
+  </div></div>
+          <button class="add-btn" data-add="r_resolved">＋ Add RESOLVED clause</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Enactment &amp; Signature</h2>
+          <span class="eyebrow">Passage block</span>
+        </div>
+        <div class="card-body">
+          <div class="callout">
+            <span class="lab">NOTICE</span>
+            <span>A resolution is <em>non-binding</em> and requires a <strong>3/4 vote</strong> to pass. It is not subject to executive signature or veto.</span>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label>Date of Passage</label>
+              <input type="date" id="r_date" value="">
+              <span class="hint hint-below">Set to date Senate will vote on this resolution.</span>
+            </div>
+            <div class="field">
+              <label>USG President (signatory)</label>
+              <input type="text" id="r_president" value="" placeholder="Full name">
+            </div>
+          </div>
+        </div>
+        <div class="toolbar">
+          <button class="btn primary is-blocked" data-download="resolution" data-blocked="1">⬇ Download Resolution (.docx)</button>
+          <button class="btn ghost" data-reset="resolution">Reset</button>
+          <span class="spacer"></span>
+          <span class="note"><span class="blocked-note">⚠ 9 bylaw checks failing — resolve before download.</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== AMENDMENT ===== -->
+    <section class="form-panel" data-panel="amendment" data-protonpass-form="">
+
+      <div class="definition-card">
+        <h3>What is an Amendment?</h3>
+        <span class="def-ref">From the USG Bylaws · Art. III, §6.1</span>
+        <blockquote>An amendment is used to change or "amend" the bylaws of the USG. An amendment must be introduced and read at a meeting prior to its vote. After the reading, the amendment's author must elaborate on the reasoning and necessity of the amendment before the Senate. Such debate is at the unlimited discretion of the Chair. After the discussion period, the amendment must be tabled until the next meeting of the Senate at which time a second round of discussion and debate will ensue at the discretion of the Chair. A 2/3 majority vote is required for passage.</blockquote>
+      </div>
+
+      <div class="compliance">
+        <h3>Required Fields</h3>
+        <ul class="checklist" id="amd-checks"><li class="warn"><span class="mark">!</span><span>Amendment number assigned</span></li><li class="warn"><span class="mark">!</span><span>Academic year set</span></li><li class="warn"><span class="mark">!</span><span>At least one author</span></li><li class="warn"><span class="mark">!</span><span>≥1 WHEREAS clause</span></li><li class="warn"><span class="mark">!</span><span>≥1 RESOLVED clause</span></li><li class="warn"><span class="mark">!</span><span>Date of passage set</span></li><li class="warn"><span class="mark">!</span><span>President (signatory) specified</span></li></ul>
+      </div>
+
+      <div class="card">
+        <div class="card-head with-tmpl">
+          <h2>Identification</h2>
+          <div class="head-tools">
+            <select id="a_tmpl_select" class="tmpl-select head-tmpl" title="Apply a saved template"></select>
+            <button class="head-icon-btn" data-tmpl-import-docx="amendment" title="Import amendment from a .docx file" aria-label="Import DOCX">⬆</button>
+            <input type="file" data-tmpl-docx-input="amendment" accept=".docx" hidden>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="field">
+              <label>Amendment Number</label>
+              <input type="number" min="1" max="3999" step="1" id="a_number" value="" placeholder="e.g. 49">
+              <span class="hint hint-below">Auto-converted to Roman numerals <span id="a_number_preview" class="roman-peek"></span></span>
+            </div>
+            <div class="field">
+              <label>Academic Year</label>
+              <input type="text" id="a_year" value="" placeholder="e.g. 2026-2027">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label>Author(s)</label>
+              <div class="name-list" id="a_authors_list"><div class="name-empty">None — click “Add” below.</div></div>
+              <button class="add-btn" data-add-name="a_authors">＋ Add author</button>
+            </div>
+            <div class="field">
+              <label>Co-Sponsor(s)</label>
+              <div class="name-list" id="a_cosponsors_list"><div class="name-empty">None — click “Add” below.</div></div>
+              <button class="add-btn" data-add-name="a_cosponsors">＋ Add co-sponsor</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Preamble — <em>WHEREAS</em></h2>
+          <span class="eyebrow">Rationale for amendment</span>
+        </div>
+        <div class="card-body">
+          <div id="a_whereas"><div class="clause">
+    <div class="chead">
+      <span class="kw">WHEREAS · 01</span>
+      <div class="clause-actions">
+        <button class="icon-btn" data-dir="-1" title="Move up">▲</button>
+        <button class="icon-btn" data-dir="1" title="Move down">▼</button>
+        <button class="icon-btn del" title="Remove">✕ remove</button>
+      </div>
+    </div>
+    <textarea rows="3"></textarea>
+  </div></div>
+          <button class="add-btn" data-add="a_whereas">＋ Add WHEREAS clause</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Operative — <em>BE IT AMENDED</em></h2>
+          <span class="eyebrow">Changes amended</span>
+        </div>
+        <div class="card-body">
+          <div id="a_resolved"><div class="clause">
+    <div class="chead">
+      <span class="kw">BE IT AMENDED · 01</span>
+      <div class="clause-actions">
+        <button class="icon-btn" data-dir="-1" title="Move up">▲</button>
+        <button class="icon-btn" data-dir="1" title="Move down">▼</button>
+        <button class="icon-btn del" title="Remove">✕ remove</button>
+      </div>
+    </div>
+    <textarea rows="3"></textarea>
+  </div></div>
+          <button class="add-btn" data-add="a_resolved">＋ Add AMENDED clause</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Enactment &amp; Signature</h2>
+          <span class="eyebrow">Passage block</span>
+        </div>
+        <div class="card-body">
+          <div class="callout">
+            <span class="lab">NOTICE</span>
+            <span>An amendment must be <strong>introduced and read at a prior meeting</strong>, tabled to the next meeting for a second discussion, and requires a <strong>2/3 majority vote</strong> for passage.</span>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label>Date of Passage</label>
+              <input type="date" id="a_date" value="">
+              <span class="hint hint-below">Set to date Senate will vote on this amendment.</span>
+            </div>
+            <div class="field">
+              <label>USG President (signatory)</label>
+              <input type="text" id="a_president" value="" placeholder="Full name">
+            </div>
+          </div>
+        </div>
+        <div class="toolbar">
+          <button class="btn primary is-blocked" data-download="amendment" data-blocked="1">⬇ Download Amendment (.docx)</button>
+          <button class="btn ghost" data-tmpl-save="amendment">⭐ Save as Template</button>
+          <button class="btn ghost" data-reset="amendment">Reset</button>
+          <span class="spacer"></span>
+          <span class="note"><span class="blocked-note">⚠ 8 bylaw checks failing — resolve before download.</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LEGISLATION GUIDE ===== -->
+    <section class="form-panel hidden" data-panel="guide">
+      <div class="guide-panel">
+        <span class="guide-eyebrow">From the USG Bylaws</span>
+        <h1>Section 6: Legislation</h1>
+        <p class="guide-source">Bylaws of the University of Denver's Undergraduate Student Government — Article III, Section 6</p>
+
+        <h2>Subsection 1: Amendments</h2>
+        <p>An amendment is used to change or "amend" the bylaws of the USG. An amendment must be introduced and read at a meeting prior to its vote. After the reading, the amendment's author must elaborate on the reasoning and necessity of the amendment before the Senate. Such debate is at the unlimited discretion of the Chair. After the discussion period, the amendment must be tabled until the next meeting of the Senate at which time a second round of discussion and debate will ensue at the discretion of the Chair. A 2/3 majority vote is required for passage.</p>
+
+        <h2>Subsection 2: Bills</h2>
+        <p>A bill is a binding piece of legislation that can appropriate funds, create or dissolve positions within the Executive Branch and create or change the policies of the USG, both internal and external. A 2/3 majority vote is required for passage. If a funding request fails via vote, that bill may be up for immediate reconsideration via a vote in the same week, following a further discussion and debate period.</p>
+
+        <h2>Subsection 3: Resolutions</h2>
+        <p>A resolution is a non-binding piece of legislation that can express the sentiment of the body on an issue, discuss new circumstances that highlight old policy, or underscore other matters of symbolic importance. A resolution must have a 3/4 vote to pass.</p>
+        <p>A senator may present issues regarding the student body within Senate, however, a resolution must begin within a respective committee and authored by senator(s) within said committee (i.e., matters involving Student Orgs shall have resolutions originating within Student Orgs Committee). The committee shall deliberate, research, and refine the resolution before the committee chair shall host a vote amongst its members on whether to introduce the resolution to the floor of the Senate. For resolutions that do not fall cleanly within the purview of any one committee, a minimum of three senators must be involved in the authoring, research, and presentation.</p>
+
+        <h2>Subsection 4: Executive Signature and Veto</h2>
+        <p>Bills and Amendments will be turned over to the USG President for signature or veto within forty-eight hours of their passage by the Senate.</p>
+        <p>The USG president shall be vested with the power to veto any Bill or Amendment. This will prevent said legislation from going into action. The senate may override a presidential veto via a 3/4 vote in favor.</p>
+
+        <h2>Subsection 5: Assignment of Legislation to Committees</h2>
+        <p>Prior to being considered on the floor, the President Pro Tempore, in consultation with the Vice President, shall assign bills and resolutions to a committee of reference for consideration. This does not affect the ability of the President Pro Tempore to allow legislation to come to the floor prior to committee consideration. Additionally, bills nominating individuals to positions within USG shall not be subject to this requirement and instead be allowed to come directly to the Senate.</p>
+        <p>Upon receipt of a bill or resolution draft from the author, The President Pro Tempore shall determine which committee the draft shall be assigned to according to the topic of the proposed legislation. They shall announce in their section of the meeting minutes which committee a bill or resolution has been assigned to and transmit the draft to the Committee Chair.</p>
+        <p>Upon receipt of the draft, the Committee Chair will schedule a time for the bill to be considered in the committee. The committee may request to hear from the author of the bill. After considering the bill, the committee will vote on whether to refer the legislation favorably to the Senate or suggest changes to the draft and return it to the drafter for edits to be made. The committee must act on the draft and may not postpone it indefinitely or vote to fail the legislation. After the committee has voted on the bill, the committee chair shall notify the President Pro Tempore of the decision made by the committee.</p>
+        <p>If a draft was returned to the drafter, the committee chair must also note what edits were requested and a proposed time for when the legislation will be reconsidered. Legislation authored within a committee will not be subject to the same provisions of this subsection. Instead, the committee shall vote on the legislation and the committee chair shall transmit the legislation to the President Pro Tempore with a favorable recommendation.</p>
+        <p>The President Pro Tempore shall then place the legislation on the agenda for action by the Senate. If Senate Committees are not seated, this paragraph shall not apply. This procedure is strongly recommended, but may be bypassed by an agreement between the President Pro Tempore and Vice President.</p>
+        <p>Legislation may be tabled until a date determined through a motion as outlined in Roberts Rules of Order. During any other meeting that precedes the date, a piece of legislation may be brought back to the table for discussion, debate, and voting through a majority motion.</p>
+
+        <h2>Subsection 6: Confirmations</h2>
+        <p>All nominations of Executive, Senate, or Court appointees must be submitted by the Vice President or the President Pro Tempore in the form of a bill for a 2/3 confirmation vote by the Senate. There must be a written or oral explanation by the USG Executive Leadership accompanying each nomination.</p>
+
+        <h2>Subsection 7: Types of Meetings</h2>
+        <h3>A. Closed Sessions</h3>
+        <p>At any point, the President Pro Tempore and/or Vice President may make the determination that the business being discussed requires for a closed chamber Senate meeting. In such meetings, only members of the Senate, Vice President and other individuals as invited by those requesting the closed meeting may be present in the room. All persons present are forbidden from dispersing the information discussed in these meetings until instructed or permitted to do so by those requesting a closed meeting.</p>
+        <h3>B. Special Session</h3>
+        <p>Special meetings of the Senate may be called by the President Pro Tempore or by a petition of one-third of the Senate at any time provided forty-eight (48) hours' notice. Only business pertaining to the purpose of the special meeting may be conducted during a special meeting.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ RIGHT: PREVIEW ============ -->
+  <aside class="preview-col">
+    <div class="preview-head">
+      <span class="tag">8.5 × 11 · 1" margins</span>
+      <h3>Document Preview</h3>
+      <div class="logo-switcher" role="radiogroup" aria-label="Header logo">
+        <span class="logo-switcher-label">Logo</span>
+        <button type="button" class="logo-opt" data-family="tw" role="radio" aria-checked="true" title="Tower + USG wordmark">
+          <img src="assets/logo1-black-red.png" alt="Tower + USG wordmark"/>
+        </button>
+        <button type="button" class="logo-opt" data-family="to" role="radio" aria-checked="false" title="USG tower monogram">
+          <img src="assets/logo2-gold-red-du.png" alt="USG tower monogram"/>
+        </button>
+        <button type="button" class="logo-opt" data-family="hz" role="radio" aria-checked="false" title="DU horizontal 3-color">
+          <img src="assets/logo-3clr.jpg" alt="DU horizontal 3-color"/>
+        </button>
+      </div>
+    </div>
+    <div class="logo-color-row" id="logo-color-row" aria-label="Logo color variant"></div>
+    <div class="preview-viewport" id="preview-viewport">
+      <div class="doc-shell" id="doc-shell">
+        <div class="doc" id="preview"></div>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<footer>
+  <span>Legislative &amp; Formatting Guide</span>
+  <span class="foot-credits">
+    <span class="foot-credit">Built by Landon Stoll using Claude Design</span>
+    <span class="foot-credit">Maintained by Landon Stoll</span>
+  </span>
+  <a class="foot-link" href="https://www.du.edu/usg/who-we-are/governing-documents" target="_blank" rel="noopener noreferrer">
+    USG Governing Documents
+    <span aria-hidden="true">↗</span>
+  </a>
+</footer>
+
+<script src="auth.js"></script>
+<script src="templates-api.js"></script>
+<script>
+const { Document, Packer, Paragraph, TextRun, AlignmentType, ImageRun } = docx;
+
+// ---------- default content ----------
+const DEFAULTS = {
+  bill: {
+    number:'', year:'', committee:'',
+    subject:'',
+    authors:[],
+    cosponsors:[],
+    whereas:[''],
+    resolved:[''],
+    date:'', president:''
+  },
+  resolution: {
+    number:'', year:'', committee:'',
+    subject:'',
+    authors:[],
+    cosponsors:[],
+    whereas:[''],
+    resolved:[''],
+    date:'', president:''
+  },
+  amendment: {
+    number:'', year:'', article:'',
+    authors:[],
+    cosponsors:[],
+    whereas:[''],
+    resolved:[''],
+    body:'', date:'', president:''
+  }
+};
+
+const LOGOS = {
+  // Logo 1 family: tower + wordmark, 5 color variants
+  'tw-black-red':      { family:'tw', label:'Black tower · red text',  src: 'assets/logo1-black-red.png',      width: 249, height: 160, showText: true },
+  'tw-yellow-red':     { family:'tw', label:'Yellow tower · red text', src: 'assets/logo1-yellow-red.png',     width: 249, height: 160, showText: true },
+  'tw-red-gold':       { family:'tw', label:'Red tower · gold text',   src: 'assets/logo1-red-gold-v2.png',       width: 249, height: 160, showText: true },
+  'tw-red-red':        { family:'tw', label:'Red tower · red text',    src: 'assets/logo1-red-red.png',        width: 249, height: 160, showText: true },
+  'tw-black-black':    { family:'tw', label:'Black tower · black text',src: 'assets/logo1-black-black.png',    width: 249, height: 160, showText: true },
+  'tw-yellow-yellow':  { family:'tw', label:'Yellow tower · yellow text',src:'assets/logo1-yellow-yellow.png', width: 249, height: 160, showText: true },
+  // Logo 2 family: USG tower monogram, 3 color variants
+  'to-gold-red':       { family:'to', label:'Gold USG · red tower',     src: 'assets/logo2-gold-red-du.png',       width: 165, height: 165, showText: true },
+  'to-red-yellow':     { family:'to', label:'Red USG · yellow tower',  src: 'assets/logo2-red-yellow.png',     width: 165, height: 165, showText: true },
+  'to-red':            { family:'to', label:'Red monochrome',           src: 'assets/logo2-red.png',            width: 165, height: 165, showText: true },
+  'to-black':          { family:'to', label:'Black monochrome',         src: 'assets/logo2-black.png',          width: 165, height: 165, showText: true },
+  // Logo 3: DU horizontal 3-color lockup
+  'horizontal':        { family:'hz', label:'DU horizontal 3-color',    src: 'assets/logo-3clr.jpg',           width: 290, height: 72,  showText: true },
+};
+// Default variant per family (used when user clicks a family whose last-selected variant we don't remember)
+const FAMILY_DEFAULT = { tw:'tw-black-red', to:'to-gold-red', hz:'horizontal' };
+const LOGO_STORAGE_KEY = 'usg_formatter_logo';
+let currentLogo = 'tw-black-red';
+try {
+  const saved = localStorage.getItem(LOGO_STORAGE_KEY);
+  if (saved && LOGOS[saved]) currentLogo = saved;
+  // Back-compat: migrate old keys to new names.
+  if (saved === 'tower-wordmark' || saved === 'tw-red-red-alt') currentLogo = 'tw-black-red';
+  if (saved === 'tower-only') currentLogo = 'to-gold-red';
+} catch(e){}
+
+const TAB_STORAGE_KEY = 'usg_formatter_active_tab';
+const VALID_TABS = ['bill','resolution','amendment','guide'];
+let savedTab = null;
+try { savedTab = localStorage.getItem(TAB_STORAGE_KEY); } catch(e){}
+let currentTab = VALID_TABS.includes(savedTab) ? savedTab : 'amendment';
+
+// ---------- state + persistence ----------
+const STATE_STORAGE_KEY = 'usg_formatter_state_v1';
+const state = structuredClone(DEFAULTS);
+(function hydrateState(){
+  try {
+    const raw = localStorage.getItem(STATE_STORAGE_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    for (const tab of ['bill','resolution','amendment']) {
+      if (!saved[tab] || typeof saved[tab] !== 'object') continue;
+      for (const key of Object.keys(DEFAULTS[tab])) {
+        if (saved[tab][key] !== undefined) state[tab][key] = saved[tab][key];
+      }
+      // Ensure clause arrays always have at least one empty entry so the UI renders cleanly.
+      if (!Array.isArray(state[tab].whereas) || state[tab].whereas.length === 0) state[tab].whereas = [''];
+      if (!Array.isArray(state[tab].resolved) || state[tab].resolved.length === 0) state[tab].resolved = [''];
+      if (!Array.isArray(state[tab].authors)) state[tab].authors = [];
+      if (!Array.isArray(state[tab].cosponsors)) state[tab].cosponsors = [];
+    }
+  } catch(e){ /* corrupt storage - ignore */ }
+})();
+let _saveTimer = null;
+function saveState(){
+  if (_saveTimer) return;
+  _saveTimer = setTimeout(()=>{
+    _saveTimer = null;
+    try { localStorage.setItem(STATE_STORAGE_KEY, JSON.stringify(state)); } catch(e){}
+  }, 150);
+}
+
+function activateTab(name){
+  currentTab = name;
+  try { localStorage.setItem(TAB_STORAGE_KEY, name); } catch(e){}
+  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x.dataset.tab === name));
+  document.querySelectorAll('.form-panel').forEach(p => p.classList.toggle('hidden', p.dataset.panel !== name));
+  const previewCol = document.querySelector('.preview-col');
+  if (previewCol) previewCol.classList.toggle('hidden', name === 'guide');
+  const formCol = document.querySelector('.form-col');
+  if (formCol) formCol.classList.toggle('guide-mode', name === 'guide');
+  document.body.classList.toggle('on-guide', name === 'guide');
+}
+
+// ---------- tabs ----------
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    activateTab(t.dataset.tab);
+    renderPreview();
+    renderCompliance();
+  });
+});
+// Apply the saved tab state on load (overrides any hardcoded "active" markup).
+activateTab(currentTab);
+
+// ---------- logo switcher ----------
+// Remember the last-selected variant per family (so switching away & back restores color choice).
+const familyLast = {
+  tw: currentLogo.startsWith('tw-') ? currentLogo : 'tw-black-red',
+  to: currentLogo.startsWith('to-') ? currentLogo : 'to-gold-red',
+  hz: 'horizontal'
+};
+
+function currentFamily(){
+  return (LOGOS[currentLogo] && LOGOS[currentLogo].family) || 'tw';
+}
+
+function renderLogoColorRow(){
+  const row = document.getElementById('logo-color-row');
+  if (!row) return;
+  row.innerHTML = '';
+  const fam = currentFamily();
+  if (fam !== 'tw' && fam !== 'to') { row.classList.remove('visible'); row.dataset.open = ''; return; }
+  const keys = Object.keys(LOGOS).filter(k => LOGOS[k].family === fam);
+  for (const key of keys) {
+    const L = LOGOS[key];
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'logo-color-opt';
+    btn.dataset.logo = key;
+    btn.title = L.label;
+    btn.setAttribute('role','radio');
+    btn.setAttribute('aria-checked', key === currentLogo ? 'true' : 'false');
+    btn.innerHTML = `<img src="${L.src}" alt="${L.label}"/>`;
+    btn.addEventListener('click', () => { setLogo(key); positionColorRow(); });
+    row.appendChild(btn);
+  }
+}
+
+function positionColorRow(){
+  const row = document.getElementById('logo-color-row');
+  if (!row || !row.classList.contains('visible')) return;
+  const fam = currentFamily();
+  const anchor = document.querySelector(`.logo-opt[data-family="${fam}"]`);
+  if (!anchor) return;
+  // Temporarily ensure measurable
+  const prevVis = row.style.visibility;
+  row.style.visibility = 'hidden';
+  const rect = anchor.getBoundingClientRect();
+  const w = row.offsetWidth;
+  const h = row.offsetHeight;
+  const margin = 8;
+  // Center horizontally under the anchor, drop below it.
+  let left = rect.left + rect.width/2 - w/2;
+  let top  = rect.bottom + 8;
+  // Clamp into viewport; if it would overflow the bottom, flip above the anchor.
+  if (top + h + margin > window.innerHeight) {
+    top = rect.top - h - 8;
+  }
+  left = Math.max(margin, Math.min(left, window.innerWidth - w - margin));
+  top  = Math.max(margin, Math.min(top,  window.innerHeight - h - margin));
+  row.style.top  = top  + 'px';
+  row.style.left = left + 'px';
+  row.style.visibility = prevVis || '';
+}
+
+function openColorRow(){
+  const row = document.getElementById('logo-color-row');
+  if (!row) return;
+  // Move to <body> so no ancestor can trap it in a stacking context
+  if (row.parentElement !== document.body) document.body.appendChild(row);
+  const fam = currentFamily();
+  if (fam !== 'tw' && fam !== 'to') return;
+  row.classList.add('visible');
+  row.dataset.open = '1';
+  positionColorRow();
+}
+function closeColorRow(){
+  const row = document.getElementById('logo-color-row');
+  if (!row) return;
+  row.classList.remove('visible');
+  row.dataset.open = '';
+}
+
+function setLogo(key, skipRender){
+  if (!LOGOS[key]) return;
+  currentLogo = key;
+  const fam = LOGOS[key].family;
+  familyLast[fam] = key;
+  try { localStorage.setItem(LOGO_STORAGE_KEY, key); } catch(e){}
+  document.querySelectorAll('.logo-opt').forEach(b => {
+    b.setAttribute('aria-checked', b.dataset.family === fam ? 'true' : 'false');
+    // Swap thumbnail to show the family's currently-selected variant
+    const famKey = familyLast[b.dataset.family] || FAMILY_DEFAULT[b.dataset.family];
+    const famL = LOGOS[famKey];
+    const img = b.querySelector('img');
+    if (img && famL) img.src = famL.src;
+  });
+  renderLogoColorRow();
+  if (!skipRender && typeof renderPreview === 'function') renderPreview();
+}
+document.querySelectorAll('.logo-opt').forEach(b => {
+  b.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const fam = b.dataset.family;
+    const isActive = currentFamily() === fam;
+    if (!isActive) {
+      // Switch family — select its last-picked variant; don't open popover
+      setLogo(familyLast[fam] || FAMILY_DEFAULT[fam]);
+      closeColorRow();
+      return;
+    }
+    // Already-active family: toggle the color popover (only for families with variants)
+    if (fam === 'hz') return;
+    const row = document.getElementById('logo-color-row');
+    if (row && row.dataset.open === '1') closeColorRow();
+    else openColorRow();
+  });
+});
+// Outside click / Esc / resize / scroll handlers for color popover
+document.addEventListener('click', (e)=>{
+  const row = document.getElementById('logo-color-row');
+  if (!row || row.dataset.open !== '1') return;
+  if (row.contains(e.target)) return;
+  if (e.target.closest('.logo-opt')) return;
+  closeColorRow();
+});
+document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeColorRow(); });
+window.addEventListener('resize', positionColorRow);
+window.addEventListener('scroll', positionColorRow, true);
+// Apply saved selection on load (skip render — preview isn't ready yet).
+setLogo(currentLogo, true);
+
+// ---------- name-list editor (authors / co-sponsors) ----------
+function renderNameList(containerId, arr){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  el.innerHTML = '';
+  arr.forEach((val, i) => {
+    const row = document.createElement('div');
+    row.className = 'name-row';
+    row.innerHTML = `
+      <input type="text" class="name-input" placeholder="e.g. Senator Landon Stoll"/>
+      <button class="icon-btn del" title="Remove">✕</button>
+    `;
+    const input = row.querySelector('input');
+    input.value = val || '';
+    input.addEventListener('input', ()=>{ arr[i] = input.value; renderPreview(); renderCompliance(); });
+    row.querySelector('.del').addEventListener('click', ()=>{
+      arr.splice(i,1); renderNameList(containerId, arr); renderPreview(); renderCompliance();
+    });
+    el.appendChild(row);
+  });
+  if(arr.length === 0){
+    const empty = document.createElement('div');
+    empty.className = 'name-empty';
+    empty.textContent = 'None — click “Add” below.';
+    el.appendChild(empty);
+  }
+}
+function renderAllNameLists(){
+  renderNameList('b_authors_list', state.bill.authors);
+  renderNameList('b_cosponsors_list', state.bill.cosponsors);
+  renderNameList('r_authors_list', state.resolution.authors);
+  renderNameList('r_cosponsors_list', state.resolution.cosponsors);
+  renderNameList('a_authors_list', state.amendment.authors);
+  renderNameList('a_cosponsors_list', state.amendment.cosponsors);
+}
+document.querySelectorAll('[data-add-name]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const id = btn.dataset.addName;              // e.g. b_authors, r_cosponsors
+    const [prefix, kind] = id.split('_');
+    const tab = {b:'bill',r:'resolution',a:'amendment'}[prefix];
+    state[tab][kind].push('');
+    renderNameList(id + '_list', state[tab][kind]);
+    renderPreview(); renderCompliance();
+  });
+});
+
+// ---------- clause editor ----------
+function clauseCard(kw, value, idx, onChange, onDelete, onMove) {
+  const wrap = document.createElement('div');
+  wrap.className='clause';
+  const placeholder = (kw === 'BE IT RESOLVED' || kw === 'BE IT ENACTED' || kw === 'BE IT AMENDED')
+    ? 'That the Undergraduate Student Government ...'
+    : 'Provide context or justification for this legislation ...';
+  wrap.innerHTML = `
+    <div class="chead">
+      <span class="kw">${kw} · ${String(idx+1).padStart(2,'0')}</span>
+      <div class="clause-actions">
+        <button class="icon-btn" data-dir="-1" title="Move up">▲</button>
+        <button class="icon-btn" data-dir="1" title="Move down">▼</button>
+        <button class="icon-btn del" title="Remove">✕ remove</button>
+      </div>
+    </div>
+    <textarea rows="3" placeholder="${placeholder.replace(/"/g,'&quot;')}"></textarea>
+  `;
+  const ta = wrap.querySelector('textarea');
+  ta.value = value || '';
+  ta.addEventListener('input', ()=> onChange(ta.value));
+  wrap.querySelector('.del').addEventListener('click', onDelete);
+  wrap.querySelectorAll('[data-dir]').forEach(b=>{
+    b.addEventListener('click', ()=> onMove(parseInt(b.dataset.dir,10)));
+  });
+  return wrap;
+}
+
+function renderClauseList(id, kw, arr) {
+  const el = document.getElementById(id);
+  el.innerHTML = '';
+  arr.forEach((val, i) => {
+    el.appendChild(clauseCard(kw, val, i,
+      (v)=>{ arr[i]=v; renderPreview(); renderCompliance(); },
+      ()=>{ arr.splice(i,1); renderClauseList(id,kw,arr); renderPreview(); renderCompliance(); },
+      (dir)=>{ const j=i+dir; if(j<0||j>=arr.length) return; [arr[i],arr[j]]=[arr[j],arr[i]]; renderClauseList(id,kw,arr); renderPreview(); }
+    ));
+  });
+}
+function renderAllClauseLists(){
+  renderClauseList('b_whereas','WHEREAS', state.bill.whereas);
+  renderClauseList('b_resolved','BE IT ENACTED', state.bill.resolved);
+  renderClauseList('r_whereas','WHEREAS', state.resolution.whereas);
+  renderClauseList('r_resolved','BE IT RESOLVED', state.resolution.resolved);
+  renderClauseList('a_whereas','WHEREAS', state.amendment.whereas);
+  renderClauseList('a_resolved','BE IT AMENDED', state.amendment.resolved);
+}
+
+document.querySelectorAll('[data-add]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const id = btn.dataset.add;
+    const [prefix, kind] = id.split('_');
+    const tab = {b:'bill',r:'resolution',a:'amendment'}[prefix];
+    const kw = kind==='whereas' ? 'WHEREAS' : (prefix==='r' ? 'BE IT RESOLVED' : prefix==='a' ? 'BE IT AMENDED' : 'BE IT ENACTED');
+    state[tab][kind].push('');
+    renderClauseList(id, kw, state[tab][kind]);
+    renderPreview(); renderCompliance();
+  });
+});
+
+// ---------- fields ----------
+const FIELD_MAP = [
+  ['b_number','bill','number'],['b_year','bill','year'],
+  ['b_subject','bill','subject'],
+  ['b_date','bill','date'],['b_president','bill','president'],
+
+  ['r_number','resolution','number'],['r_year','resolution','year'],
+  ['r_subject','resolution','subject'],
+  ['r_date','resolution','date'],['r_president','resolution','president'],
+
+  ['a_number','amendment','number'],['a_year','amendment','year'],['a_article','amendment','article'],
+  ['a_body','amendment','body'],['a_date','amendment','date'],['a_president','amendment','president'],
+];
+function bindFields(){
+  FIELD_MAP.forEach(([id,tab,key])=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.value = state[tab][key] || '';
+    el.addEventListener('input', ()=>{ state[tab][key] = el.value; renderPreview(); renderCompliance(); });
+    el.addEventListener('change', ()=>{ state[tab][key] = el.value; renderPreview(); renderCompliance(); });
+  });
+}
+
+// ---------- compliance checks ----------
+// Each check returns {ok, label, ref, blocking}
+// blocking:true checks prevent download until green.
+function chk(ok, label, ref, blocking){ return {ok:!!ok, label, ref:ref||'', blocking: blocking!==false}; }
+function renderCheckList(items){
+  return items.map(c=>{
+    const cls = c.ok ? 'ok' : (c.blocking ? 'warn' : 'info');
+    const mark = c.ok ? '✓' : (c.blocking ? '!' : 'i');
+    return `<li class="${cls}"><span class="mark">${mark}</span><span>${c.label}${c.ref?` <span class="ref">${c.ref}</span>`:''}</span></li>`;
+  }).join('');
+}
+
+// Returns the checks arrays keyed by tab — so we can compute blocking failures.
+function computeChecks(){
+  const out = {};
+  // Bill
+  {
+    const s = state.bill;
+    out.bill = [
+      chk(!!s.number && s.number !== 'x', 'Bill number assigned'),
+      chk(!!s.year.trim(), 'Academic year set'),
+      chk(!!s.subject.trim(), 'Subject line present'),
+      chk(!!s.authors.filter(x=>x.trim()).length, 'At least one author'),
+      chk(s.whereas.filter(w=>w.trim()).length >= 1, '≥1 WHEREAS clause'),
+      chk(s.resolved.filter(w=>w.trim()).length >= 1, '≥1 ENACTED clause'),
+      chk(!!s.date, 'Date of passage set'),
+      chk(!!s.president.trim(), 'President (signatory) specified'),
+    ];
+  }
+  // Resolution
+  {
+    const s = state.resolution;
+    out.resolution = [
+      chk(!!s.number, 'Resolution number assigned'),
+      chk(!!s.year.trim(), 'Academic year set'),
+      chk(!!s.subject.trim(), 'Regarding / subject present'),
+      chk(!!s.authors.filter(x=>x.trim()).length, 'At least one author'),
+      chk(s.whereas.filter(w=>w.trim()).length >= 1, '≥1 WHEREAS clause'),
+      chk(s.resolved.filter(w=>w.trim()).length >= 1, '≥1 RESOLVED clause'),
+      chk(!!s.date, 'Date of passage set'),
+      chk(!!s.president.trim(), 'President (signatory) specified'),
+    ];
+  }
+  // Amendment
+  {
+    const s = state.amendment;
+    out.amendment = [
+      chk(!!s.number, 'Amendment number assigned'),
+      chk(!!s.year.trim(), 'Academic year set'),
+      chk(!!s.authors.filter(x=>x.trim()).length, 'At least one author'),
+      chk(s.whereas.filter(w=>w.trim()).length >= 1, '≥1 WHEREAS clause'),
+      chk(s.resolved.filter(w=>w.trim()).length >= 1, '≥1 AMENDED clause'),
+      chk(!!s.date, 'Date of passage set'),
+      chk(!!s.president.trim(), 'President (signatory) specified'),
+    ];
+  }
+  return out;
+}
+
+function blockingFailures(checks){ return checks.filter(c => !c.ok && c.blocking); }
+
+function renderCompliance(){
+  const all = computeChecks();
+  document.getElementById('bill-checks').innerHTML = renderCheckList(all.bill);
+  document.getElementById('res-checks').innerHTML  = renderCheckList(all.resolution);
+  document.getElementById('amd-checks').innerHTML  = renderCheckList(all.amendment);
+
+  // Gate download buttons
+  ['bill','resolution','amendment'].forEach(which=>{
+    const btn = document.querySelector(`[data-download="${which}"]`);
+    if(!btn) return;
+    const fails = blockingFailures(all[which]);
+    btn.dataset.blocked = fails.length ? '1' : '';
+    btn.classList.toggle('is-blocked', fails.length>0);
+    // Live hint text next to toolbar
+    const note = btn.closest('.toolbar')?.querySelector('.note');
+    if(note){
+      if(fails.length){
+        note.innerHTML = `<span class="blocked-note">⚠ ${fails.length} bylaw check${fails.length===1?'':'s'} failing — resolve before download.</span>`;
+      }else{
+        note.textContent = 'Bylaw-compliant · ready to download.';
+      }
+    }
+  });
+}
+
+// ---------- preview ----------
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// 1-3999 → Roman numeral. If input is already letters (fallback), return as-is (uppercased).
+function toRoman(v){
+  if(v==null) return '';
+  const s = String(v).trim();
+  if(!s) return '';
+  const n = parseInt(s,10);
+  if(!Number.isFinite(n) || n<=0 || n>3999){
+    // user typed letters — just uppercase
+    return /^[IVXLCDMivxlcdm]+$/.test(s) ? s.toUpperCase() : s;
+  }
+  const map = [
+    [1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],
+    [100,'C'],[90,'XC'],[50,'L'],[40,'XL'],
+    [10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']
+  ];
+  let r = '', x = n;
+  for(const [val,sym] of map){ while(x>=val){ r+=sym; x-=val; } }
+  return r;
+}
+
+// YYYY-MM-DD → "7th day of April 2026"
+function formatPassageDate(iso){
+  if(!iso) return '';
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso.trim());
+  if(!m) return iso.trim(); // fallback: user typed free text
+  const [_, y, mo, d] = m;
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const day = parseInt(d,10);
+  const suffix = (n) => {
+    const v = n % 100;
+    if(v>=11 && v<=13) return 'th';
+    switch(n%10){ case 1: return 'st'; case 2: return 'nd'; case 3: return 'rd'; default: return 'th'; }
+  };
+  return `${day}${suffix(day)} day of ${months[parseInt(mo,10)-1]} ${y}`;
+}
+
+function headerHTML(year){
+  const L = LOGOS[currentLogo] || LOGOS['tw-red-red'];
+  const textLines = L.showText
+    ? `<div class="line">UNIVERSITY OF DENVER</div>
+      <div class="line">UNDERGRADUATE STUDENT GOVERNMENT</div>`
+    : '';
+  return `
+    <div class="hdr" data-logo="${currentLogo}" data-family="${L.family}">
+      <img src="${L.src}" alt="USG"/>
+      ${textLines}
+      <div class="line">${esc(year)}</div>
+    </div>`;
+}
+function withSemi(s){
+  const t = (s||'').trimEnd();
+  if(!t) return t;
+  // Strip any trailing . , ; : then append a single semicolon.
+  return t.replace(/[.,;:]+$/,'') + ';';
+}
+function withPeriod(s){
+  const t = (s||'').trimEnd();
+  if(!t) return t;
+  // Strip any trailing . , ; : then append a single period.
+  return t.replace(/[.,;:]+$/,'') + '.';
+}
+
+function sigHTML(date, pres){
+  const formatted = formatPassageDate(date);
+  const withDot = formatted ? formatted + '.' : '';
+  return `
+    <div class="sig">
+      <p>PASSED and ADOPTED at a regular meeting of the Undergraduate Senate held this ${esc(withDot)}</p>
+      <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+      <p class="sigline">____________________________</p>
+      <p>${esc(pres)}</p>
+      <p>Undergraduate Student Body President</p>
+    </div>`;
+}
+
+const BLANK = '<p>&nbsp;</p>';
+function previewBill(){
+  const s = state.bill;
+  return headerHTML(s.year) + BLANK +
+    `<p class="ctitle">Bill #${esc(s.number)}</p>` + BLANK +
+    `<p class="ctr">A BILL OF THE UNDERGRADUATE STUDENT GOVERNMENT CONCERNING ${esc(s.subject)}</p>` + BLANK +
+    `<p>Author(s): ${esc((s.authors||[]).join('; '))}</p>
+     <p>Co-Sponsor(s): ${esc((s.cosponsors||[]).join('; '))}</p>` + BLANK +
+     s.whereas.map(w=>`<p><b>WHEREAS;</b> ${esc(withSemi(w))}</p>${BLANK}`).join('') +
+    `<p class="bold center">NOW, THEREFORE, THE UNDERGRADUATE STUDENT GOVERNMENT OF THE UNIVERSITY OF DENVER ENACTS THE FOLLOWING:</p>` + BLANK +
+     s.resolved.map((r,i)=>`<p><b>${i===0?'BE IT ENACTED;':'BE IT FURTHER ENACTED;'}</b> ${esc(withPeriod(r))}</p>${BLANK}`).join('') +
+     sigHTML(s.date, s.president);
+}
+function previewResolution(){
+  const s = state.resolution;
+  return headerHTML(s.year) + BLANK +
+    `<p class="ctitle">Senate Resolution ${esc(toRoman(s.number))}</p>` + BLANK +
+    `<p class="ctr">A RESOLUTION OF THE UNDERGRADUATE STUDENT GOVERNMENT REGARDING ${esc(s.subject)}</p>` + BLANK +
+    `<p>Author(s): ${esc((s.authors||[]).join('; '))}</p>
+     <p>Co-Sponsor(s): ${esc((s.cosponsors||[]).join('; '))}</p>` + BLANK +
+     s.whereas.map(w=>`<p><b>WHEREAS;</b> ${esc(withSemi(w))}</p>${BLANK}`).join('') +
+    `<p class="bold center">NOW, THEREFORE, THE UNDERGRADUATE STUDENT GOVERNMENT OF THE UNIVERSITY OF DENVER RESOLVES THE FOLLOWING:</p>` + BLANK +
+     s.resolved.map((r,i)=>`<p><b>${i===0?'BE IT RESOLVED;':'BE IT FURTHER RESOLVED;'}</b> ${esc(withPeriod(r))}</p>${BLANK}`).join('') +
+     sigHTML(s.date, s.president);
+}
+function previewAmendment(){
+  const s = state.amendment;
+  return headerHTML(s.year) + BLANK +
+    `<p class="ctitle">Amendment ${esc(toRoman(s.number))}</p>` + BLANK +
+    `<p>Author(s): ${esc((s.authors||[]).join('; '))}</p>
+     <p>Co-Sponsor(s): ${esc((s.cosponsors||[]).join('; '))}</p>` + BLANK +
+     s.whereas.map(w=>`<p><b>WHEREAS;</b> ${esc(withSemi(w))}</p>${BLANK}`).join('') +
+    `<p class="bold center">NOW, THEREFORE, THE UNDERGRADUATE STUDENT GOVERNMENT OF THE UNIVERSITY OF DENVER AMENDS THE FOLLOWING:</p>` + BLANK +
+     s.resolved.map((r,i)=>`<p><b>${i===0?'BE IT AMENDED;':'BE IT FURTHER AMENDED;'}</b> ${esc(withPeriod(r))}</p>${BLANK}`).join('') +
+     (s.body ? `<p style="white-space:pre-wrap">${esc(s.body)}</p>${BLANK}` : '') +
+     sigHTML(s.date, s.president);
+}
+function renderPreview(){
+  saveState();
+  if (currentTab === 'guide') return;
+  const el = document.getElementById('preview');
+  el.innerHTML = currentTab==='bill' ? previewBill() : currentTab==='resolution' ? previewResolution() : previewAmendment();
+  if (typeof scalePreview === 'function') requestAnimationFrame(scalePreview);
+}
+
+// ---------- docx helpers ----------
+// Use an object form of `font` so Word binds ascii/hAnsi/cs/eastAsia all to
+// Georgia and does not fall back to the theme default (Aptos in modern Word).
+const GEORGIA_FONTS = {ascii:'Georgia', hAnsi:'Georgia', cs:'Georgia', eastAsia:'Georgia'};
+const GEORGIA='Georgia', TIMES='Times New Roman';
+function georgia(t,o={}){return new TextRun({text:t,font:GEORGIA_FONTS,size:22,bold:!!o.bold,color:'000000'});}
+// All body content is Georgia to match the reference document.
+function times(t,o={}){return new TextRun({text:t,font:GEORGIA_FONTS,size:22,bold:!!o.bold,color:'000000'});}
+function para(runs,o={}){return new Paragraph({alignment:o.alignment,spacing:{after:o.after??0,line:278,lineRule:'auto'},children:runs});}
+function blank(){return para([georgia('')]);}
+
+async function loadLogoBuffer(){
+  const L = LOGOS[currentLogo] || LOGOS['tw-red-red'];
+  // Read the URL from the preloaded <img data-logo-asset="..."> element in
+  // the DOM. The bundler rewrites these src attrs to blob: URLs, so in the
+  // standalone bundle this resolves correctly; in dev it's still the file
+  // path, so fetch() works either way.
+  const preload = document.querySelector('img[data-logo-asset="' + L.src + '"]');
+  const src = preload ? preload.src : (L.src + '?v=' + Date.now());
+  const res = await fetch(src, {cache:'no-store'});
+  return await res.arrayBuffer();
+}
+function headerParagraphs(year, logoBuf){
+  const L = LOGOS[currentLogo] || LOGOS['tw-red-red'];
+  const out = [
+    new Paragraph({alignment:AlignmentType.RIGHT,spacing:{after: currentLogo==='horizontal' ? 640 : 0},children:[new ImageRun({data:logoBuf,transformation:{width:L.width,height:L.height}})]}),
+  ];
+  if (L.showText) {
+    out.push(para([georgia('UNIVERSITY OF DENVER ')], {alignment:AlignmentType.RIGHT}));
+    out.push(para([georgia('UNDERGRADUATE STUDENT GOVERNMENT ')], {alignment:AlignmentType.RIGHT}));
+  }
+  out.push(para([georgia(year)], {alignment:AlignmentType.RIGHT}));
+  out.push(para([georgia(' ')], {alignment:AlignmentType.CENTER}));
+  return out;
+}
+function signatureParagraphs(dateStr, pres){
+  const formatted = formatPassageDate(dateStr);
+  const withDot = formatted ? formatted + '.' : '';
+  return [
+    para([times(`PASSED and ADOPTED at a regular meeting of the Undergraduate Senate held this ${withDot}`)]),
+    blank(), blank(), blank(),
+    para([times('____________________________',{bold:true})]),
+    para([times(pres)]),
+    para([times('Undergraduate Student Body President')]),
+  ];
+}
+function makeDoc(children){
+  return new Document({
+    creator:'USG Document Formatter', title:'USG Document',
+    styles:{default:{document:{run:{font:GEORGIA_FONTS,size:22,color:'000000'},paragraph:{spacing:{after:0,line:278,lineRule:'auto'}}}}},
+    sections:[{properties:{page:{margin:{top:1440,right:1440,bottom:1440,left:1440}}}, children}],
+  });
+}
+
+async function buildBillDoc(){
+  const s = state.bill, logoBuf = await loadLogoBuffer();
+  const c = [
+    ...headerParagraphs(s.year, logoBuf),
+    para([georgia(`Bill #${s.number}`, {bold:true})], {alignment:AlignmentType.CENTER}),
+    blank(),
+    para([georgia(`A BILL OF THE UNDERGRADUATE STUDENT GOVERNMENT CONCERNING ${s.subject}`)], {alignment:AlignmentType.CENTER}),
+    blank(),
+    para([times('Author(s): '), times((s.authors||[]).join('; '))]),
+    para([times('Co-Sponsor(s): '), times((s.cosponsors||[]).join('; '))]),
+    blank(),
+  ];
+  s.whereas.forEach(w=>{ c.push(para([times('WHEREAS; ',{bold:true}), times(withSemi(w))])); c.push(blank()); });
+  c.push(para([times('NOW, THEREFORE, THE UNDERGRADUATE STUDENT GOVERNMENT OF THE UNIVERSITY OF DENVER ENACTS THE FOLLOWING:',{bold:true})], {alignment:AlignmentType.CENTER}));
+  c.push(blank());
+  s.resolved.forEach((r,i)=>{
+    const kw = i===0 ? 'BE IT ENACTED; ' : 'BE IT FURTHER ENACTED; ';
+    c.push(para([times(kw,{bold:true}), times(withPeriod(r))])); c.push(blank());
+  });
+  c.push(...signatureParagraphs(s.date, s.president));
+  return makeDoc(c);
+}
+async function buildResolutionDoc(){
+  const s = state.resolution, logoBuf = await loadLogoBuffer();
+  const c = [
+    ...headerParagraphs(s.year, logoBuf),
+    para([georgia(`Senate Resolution ${toRoman(s.number)}`,{bold:true})], {alignment:AlignmentType.CENTER}),
+    blank(),
+    para([georgia(`A RESOLUTION OF THE UNDERGRADUATE STUDENT GOVERNMENT REGARDING ${s.subject}`)], {alignment:AlignmentType.CENTER}),
+    blank(),
+    para([times('Author(s): '), times((s.authors||[]).join('; '))]),
+    para([times('Co-Sponsor(s): '), times((s.cosponsors||[]).join('; '))]),
+    blank(),
+  ];
+  s.whereas.forEach(w=>{ c.push(para([times('WHEREAS; ',{bold:true}), times(withSemi(w))])); c.push(blank()); });
+  c.push(para([times('NOW, THEREFORE, THE UNDERGRADUATE STUDENT GOVERNMENT OF THE UNIVERSITY OF DENVER RESOLVES THE FOLLOWING:',{bold:true})], {alignment:AlignmentType.CENTER}));
+  c.push(blank());
+  s.resolved.forEach((r,i)=>{
+    const kw = i===0 ? 'BE IT RESOLVED; ' : 'BE IT FURTHER RESOLVED; ';
+    c.push(para([times(kw,{bold:true}), times(withPeriod(r))])); c.push(blank());
+  });
+  c.push(...signatureParagraphs(s.date, s.president));
+  return makeDoc(c);
+}
+async function buildAmendmentDoc(){
+  const s = state.amendment, logoBuf = await loadLogoBuffer();
+  const c = [
+    ...headerParagraphs(s.year, logoBuf),
+    para([georgia(`Amendment ${toRoman(s.number)}`,{bold:true})], {alignment:AlignmentType.CENTER}),
+    blank(),
+    para([times('Author(s): '), times((s.authors||[]).join('; '))]),
+    para([times('Co-Sponsor(s): '), times((s.cosponsors||[]).join('; '))]),
+    blank(),
+  ];
+  s.whereas.forEach(w=>{ c.push(para([times('WHEREAS; ',{bold:true}), times(withSemi(w))])); c.push(blank()); });
+  c.push(para([times('NOW, THEREFORE, THE UNDERGRADUATE STUDENT GOVERNMENT OF THE UNIVERSITY OF DENVER AMENDS THE FOLLOWING:',{bold:true})], {alignment:AlignmentType.CENTER}));
+  c.push(blank());
+  s.resolved.forEach((r,i)=>{
+    const kw = i===0 ? 'BE IT AMENDED; ' : 'BE IT FURTHER AMENDED; ';
+    c.push(para([times(kw,{bold:true}), times(withPeriod(r))])); c.push(blank());
+  });
+  if(s.body && s.body.trim()){
+    s.body.split(/\r?\n/).forEach(line=> c.push(para([times(line)])));
+    c.push(blank());
+  }
+  c.push(...signatureParagraphs(s.date, s.president));
+  return makeDoc(c);
+}
+
+async function downloadDocx(which){
+  let doc, filename;
+  if(which==='bill'){ doc = await buildBillDoc(); filename = `Bill ${state.bill.number||'x'}.docx`; }
+  else if(which==='resolution'){ doc = await buildResolutionDoc(); filename = `Resolution ${toRoman(state.resolution.number)||'X'}.docx`; }
+  else { doc = await buildAmendmentDoc(); filename = `Amendment ${toRoman(state.amendment.number)||'X'}.docx`; }
+  const blob = await Packer.toBlob(doc);
+  saveAs(blob, filename);
+}
+document.querySelectorAll('[data-download]').forEach(btn=>{
+  btn.addEventListener('click', async ()=>{
+    const which = btn.dataset.download;
+    // Re-run checks at click time — state may have changed.
+    const all = computeChecks();
+    const fails = blockingFailures(all[which]);
+    if(fails.length){
+      const isPro = document.body.classList.contains('pro-mode');
+      showComplianceBlock(which, fails, { warnOnly: isPro, onProceed: isPro ? ()=>runDownload(btn, which) : null });
+      return;
+    }
+    runDownload(btn, which);
+  });
+});
+
+async function runDownload(btn, which){
+  const prev = btn.textContent;
+  btn.textContent='Building…'; btn.disabled=true;
+  try{ await downloadDocx(which); btn.textContent='✓ Downloaded'; }
+  catch(e){ btn.textContent='⚠ Error'; }
+  setTimeout(()=>{ btn.textContent=prev; btn.disabled=false; }, 1400);
+}
+
+// Modal shown when user tries to download with failing checks.
+// opts.warnOnly = true  → framed as a warning, offers "Download anyway"
+// opts.warnOnly = false → hard block (default)
+function showComplianceBlock(which, fails, opts){
+  opts = opts || {};
+  const label = {bill:'Bill', resolution:'Resolution', amendment:'Amendment'}[which];
+  let m = document.getElementById('compliance-modal');
+  if(!m){
+    m = document.createElement('div');
+    m.id = 'compliance-modal';
+    m.className = 'modal-backdrop';
+    m.innerHTML = `
+      <div class="modal">
+        <div class="modal-head">
+          <span class="eyebrow">Bylaw compliance</span>
+          <h3></h3>
+        </div>
+        <div class="modal-body">
+          <p class="modal-intro"></p>
+          <ul class="modal-fails"></ul>
+          <p class="modal-foot"></p>
+        </div>
+        <div class="modal-actions"></div>
+      </div>`;
+    document.body.appendChild(m);
+    m.addEventListener('click', (e)=>{
+      if(e.target===m || e.target.matches('[data-close]')) m.classList.remove('open');
+    });
+  }
+  const head   = m.querySelector('.modal-head h3');
+  const intro  = m.querySelector('.modal-intro');
+  const foot   = m.querySelector('.modal-foot');
+  const acts   = m.querySelector('.modal-actions');
+
+  if(opts.warnOnly){
+    head.textContent = 'Document is missing required items';
+    intro.textContent = `The ${label.toLowerCase()} is missing ${fails.length} item${fails.length===1?'':'s'} required by the USG bylaws:`;
+    foot.textContent = 'You can download anyway, but the document may not comply with the bylaws.';
+    acts.innerHTML = '';
+    const cancel = document.createElement('button');
+    cancel.className = 'btn ghost'; cancel.textContent = 'Go back';
+    cancel.setAttribute('data-close','');
+    const proceed = document.createElement('button');
+    proceed.className = 'btn primary'; proceed.textContent = 'Download anyway';
+    proceed.addEventListener('click', ()=>{
+      m.classList.remove('open');
+      if(typeof opts.onProceed === 'function') opts.onProceed();
+    }, { once:true });
+    acts.appendChild(cancel);
+    acts.appendChild(proceed);
+  } else {
+    head.textContent = 'Document not ready for download';
+    intro.textContent = `The ${label.toLowerCase()} is missing ${fails.length} item${fails.length===1?'':'s'} required by the USG bylaws:`;
+    foot.textContent = 'Resolve the items above, then try again.';
+    acts.innerHTML = '<button class="btn" data-close>Got it</button>';
+  }
+
+  m.querySelector('.modal-fails').innerHTML = fails.map(f =>
+    `<li><span class="x">✕</span><span>${f.label}${f.ref?` <span class="ref">${f.ref}</span>`:''}</span></li>`
+  ).join('');
+  m.classList.add('open');
+}
+
+// ---------- Templates (Bill + Amendment) ----------
+// User-managed templates per kind (bill / amendment).
+// Storage: localStorage. Each template captures the *content* fields:
+//   bill/amendment: { subject?, whereas[], resolved[] }
+// Identification, authors, dates, signatory are NEVER part of a template.
+const TEMPLATE_STORAGE_KEY = 'usg_formatter_user_templates_v1';
+
+// Built-in entries — only "Blank". No prefab content.
+const BUILTIN_TEMPLATES = {
+  bill:       [{ id:'__blank', label:'Blank Bill',       desc:'Start with empty fields', blank:true, builtin:true }],
+  resolution: [{ id:'__blank', label:'Blank Resolution', desc:'Start with empty fields', blank:true, builtin:true }],
+  amendment:  [{ id:'__blank', label:'Blank Amendment',  desc:'Start with empty fields', blank:true, builtin:true }],
+};
+['bill','resolution','amendment'].forEach(k=>BUILTIN_TEMPLATES[k].push({ id:'__std2627', label:'Standard 2026-2027', desc:'Year and President pre-filled', blank:true, builtin:true, preset:{ year:'2026-2027', president:'Madeleine Dierking' } }));
+
+// userTemplates: { bill: Template[], amendment: Template[] }
+// Template = { id, label, subject?, whereas[], resolved[], created }
+let userTemplates = { bill: [], resolution: [], amendment: [] };
+
+function loadUserTemplates(){
+  try {
+    const raw = localStorage.getItem(TEMPLATE_STORAGE_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === 'object') {
+      if (Array.isArray(parsed.bill)) userTemplates.bill = parsed.bill.filter(_validTemplate);
+      if (Array.isArray(parsed.resolution)) userTemplates.resolution = parsed.resolution.filter(_validTemplate);
+      if (Array.isArray(parsed.amendment)) userTemplates.amendment = parsed.amendment.filter(_validTemplate);
+    }
+  } catch(e){}
+}
+function saveUserTemplates(){
+  if (_accountSyncActive){ _pushTemplatesToAccount(); return; }
+  try { localStorage.setItem(TEMPLATE_STORAGE_KEY, JSON.stringify(userTemplates)); } catch(e){}
+}
+
+// ---------- Account sync (Netlify Identity + Function) ----------
+// When signed in, the account is the source of truth; localStorage is only used while signed out.
+let _accountSyncActive = false, _pushTimer = null;
+function _renderAllTemplateSelects(){
+  renderTemplateSelect('b_tmpl_select', 'bill');
+  renderTemplateSelect('r_tmpl_select', 'resolution');
+  renderTemplateSelect('a_tmpl_select', 'amendment');
+}
+function _pushTemplatesToAccount(){
+  clearTimeout(_pushTimer);
+  _pushTimer = setTimeout(() => {
+    window.TemplatesAPI.save(userTemplates).catch(e => {
+      showToast('Couldn\u2019t save templates to your account \u2014 check your connection.');
+    });
+  }, 400);
+}
+async function _syncTemplatesFromAccount(){
+  if (!window.TemplatesAPI || !window.TemplatesAPI.available() || !window.getCurrentUser()) return;
+  try {
+    const remote = await window.TemplatesAPI.load();
+    const remoteCount = ['bill','resolution','amendment'].reduce((n,k)=>n + (remote[k]||[]).length, 0);
+    const localCount  = ['bill','resolution','amendment'].reduce((n,k)=>n + userTemplates[k].length, 0);
+    _accountSyncActive = true;
+    if (!remoteCount && localCount){
+      // First sign-in on this device: carry this browser's templates into the account.
+      await window.TemplatesAPI.save(userTemplates);
+      showToast('Moved ' + localCount + ' template' + (localCount===1?'':'s') + ' from this device into your account.');
+    } else {
+      ['bill','resolution','amendment'].forEach(k => { userTemplates[k] = (remote[k]||[]).filter(_validTemplate); });
+    }
+    _renderAllTemplateSelects();
+  } catch(e){
+    _accountSyncActive = false;
+    showToast('Couldn\u2019t reach your account\u2019s templates \u2014 using this device\u2019s copy.');
+  }
+}
+function _leaveAccountSync(){
+  _accountSyncActive = false;
+  userTemplates = { bill: [], resolution: [], amendment: [] };
+  loadUserTemplates();
+  _renderAllTemplateSelects();
+}
+window.addEventListener('usg-auth', e => {
+  const t = e.detail && e.detail.type;
+  if (t === 'logout') _leaveAccountSync();
+  else if (e.detail.user) _syncTemplatesFromAccount();
+});
+function _validTemplate(t){
+  return t && typeof t === 'object' && typeof t.id === 'string' && typeof t.label === 'string';
+}
+function _newTemplateId(){
+  return 'tpl_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,7);
+}
+function getAllTemplates(kind){
+  return [...BUILTIN_TEMPLATES[kind], ...userTemplates[kind]];
+}
+function _tmplSelectId(kind){
+  return ({bill:'b_tmpl_select', resolution:'r_tmpl_select', amendment:'a_tmpl_select'})[kind];
+}
+loadUserTemplates();
+
+// ---------- Render template dropdown ----------
+function renderTemplateSelect(selectId, kind){
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  const prevValue = sel.value;
+  sel.innerHTML = '';
+  const ph = document.createElement('option');
+  ph.value = '';
+  ph.textContent = 'Templates…';
+  ph.disabled = true;
+  ph.selected = true;
+  sel.appendChild(ph);
+
+  // Built-in group
+  const gBuilt = document.createElement('optgroup');
+  gBuilt.label = 'Built-in';
+  BUILTIN_TEMPLATES[kind].forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = 'b:' + t.id;
+    opt.textContent = t.label;
+    gBuilt.appendChild(opt);
+  });
+  sel.appendChild(gBuilt);
+
+  // User group
+  if (userTemplates[kind].length){
+    const gUser = document.createElement('optgroup');
+    gUser.label = 'My templates';
+    userTemplates[kind].forEach(t => {
+      const opt = document.createElement('option');
+      opt.value = 'u:' + t.id;
+      opt.textContent = t.label;
+      gUser.appendChild(opt);
+    });
+    sel.appendChild(gUser);
+
+    // Manage entry
+    const gManage = document.createElement('optgroup');
+    gManage.label = 'Manage';
+    const optManage = document.createElement('option');
+    optManage.value = '__manage';
+    optManage.textContent = 'Rename / delete templates…';
+    gManage.appendChild(optManage);
+    sel.appendChild(gManage);
+  }
+
+  if (!sel._wired){
+    sel._wired = true;
+    sel.addEventListener('change', () => {
+      const v = sel.value;
+      const reset = () => { sel.selectedIndex = 0; };
+      if (!v) { reset(); return; }
+      if (v === '__manage') { reset(); openManageModal(kind); return; }
+      const [src, id] = v.split(':');
+      const list = src === 'b' ? BUILTIN_TEMPLATES[kind] : userTemplates[kind];
+      const t = list.find(x => x.id === id);
+      if (!t) { reset(); return; }
+      applyTemplate(kind, t, reset);
+    });
+  }
+}
+
+// ---------- Snapshot tracking (for "is doc blank?" check) ----------
+const _tmplSnapshots = { bill: null, resolution: null, amendment: null };
+
+function _contentSnapshot(s){
+  return JSON.stringify({
+    subject: ('subject' in s ? (s.subject||'') : ''),
+    whereas: (s.whereas||[]).slice(),
+    resolved: (s.resolved||[]).slice(),
+  });
+}
+
+function templateWouldOverwrite(kind, isBlank){
+  const s = state[kind];
+  const contentFilled = (s.subject && s.subject.trim()) ||
+    (s.whereas || []).some(w => w && w.trim()) ||
+    (s.resolved || []).some(r => r && r.trim());
+  // Blank templates clear EVERY field, so any identification/author/date/signatory data also counts.
+  const idFilled = isBlank && (
+    (s.number && String(s.number).trim()) ||
+    (s.year && s.year.trim()) ||
+    (s.committee && s.committee.trim()) ||
+    (s.article && s.article.trim()) ||
+    (s.date && s.date.trim()) ||
+    (s.president && s.president.trim()) ||
+    (s.authors || []).some(a => a && a.trim()) ||
+    (s.cosponsors || []).some(c => c && c.trim())
+  );
+  if (!contentFilled && !idFilled) return false;
+  if (!isBlank && _tmplSnapshots[kind] && _tmplSnapshots[kind] === _contentSnapshot(s)) return false;
+  return true;
+}
+
+function applyTemplate(kind, t, onDone){
+  const finish = () => { if (typeof onDone === 'function') onDone(); };
+  const doApply = () => {
+    if (t.blank) {
+      // Blank template wipes the entire kind back to its DEFAULTS (every field).
+      state[kind] = structuredClone(DEFAULTS[kind]);
+      if (t.preset) Object.assign(state[kind], t.preset);
+    } else {
+      const s = state[kind];
+      if ('subject' in s) s.subject = t.subject || '';
+      s.whereas = (t.whereas && t.whereas.length) ? t.whereas.slice() : [''];
+      s.resolved = (t.resolved && t.resolved.length) ? t.resolved.slice() : [''];
+    }
+    _tmplSnapshots[kind] = _contentSnapshot(state[kind]);
+    bindFields(); renderAllClauseLists(); renderAllNameLists(); renderPreview(); renderCompliance();
+    saveState();
+    finish();
+  };
+  if (templateWouldOverwrite(kind, !!t.blank)) {
+    showTemplateConfirm(t.label, doApply, finish, !!t.blank);
+  } else {
+    doApply();
+  }
+}
+
+function showTemplateConfirm(label, onConfirm, onCancel, isBlank){
+  let m = document.getElementById('tmpl-confirm');
+  if (!m) {
+    m = document.createElement('div');
+    m.id = 'tmpl-confirm';
+    m.innerHTML = `
+      <div class="mbox">
+        <h3>Replace current content?</h3>
+        <p class="tmpl-confirm-msg"></p>
+        <div class="acts">
+          <button class="btn ghost" data-cancel>Cancel</button>
+          <button class="btn primary" data-confirm>Apply Template</button>
+        </div>
+      </div>`;
+    document.body.appendChild(m);
+    m.addEventListener('click', (e)=>{
+      if (e.target === m || e.target.matches('[data-cancel]')) {
+        m.classList.remove('open');
+        if (typeof m._onCancel === 'function') m._onCancel();
+      }
+      if (e.target.matches('[data-confirm]')) {
+        m.classList.remove('open');
+        if (typeof m._onConfirm === 'function') m._onConfirm();
+      }
+    });
+  }
+  const msg = m.querySelector('.tmpl-confirm-msg');
+  if (isBlank){
+    msg.innerHTML = `Applying <b></b> will clear <b>every field</b> on this tab — identification, authors, dates, signatory, subject, and all clauses.`;
+  } else {
+    msg.innerHTML = `Applying <b></b> will overwrite the Subject line, WHEREAS clauses, and ENACTED clauses you've already entered. Identification, authors, dates, and signatory will be preserved.`;
+  }
+  msg.querySelector('b').textContent = label;
+  m._onConfirm = onConfirm;
+  m._onCancel = onCancel;
+  m.classList.add('open');
+}
+
+// ---------- Save current as template ----------
+function saveCurrentAsTemplate(kind){
+  const s = state[kind];
+  const subject = ('subject' in s ? (s.subject||'').trim() : '');
+  const whereas = (s.whereas||[]).filter(w => w && w.trim());
+  const resolved = (s.resolved||[]).filter(r => r && r.trim());
+  if (!subject && !whereas.length && !resolved.length){
+    showAlert('Nothing to save', 'Add a Subject, a WHEREAS clause, or an ENACTED clause first, then try saving again.');
+    return;
+  }
+  showPromptModal({
+    title: 'Save as template',
+    label: 'Template name',
+    placeholder: kind === 'bill' ? 'e.g. Standard Senator Confirmation'
+               : kind === 'resolution' ? 'e.g. Support Statement'
+               : 'e.g. Bylaws Cleanup',
+    confirmText: 'Save Template',
+    onConfirm: (name) => {
+      const trimmed = (name||'').trim();
+      if (!trimmed) return false; // keep modal open
+      const t = {
+        id: _newTemplateId(),
+        label: trimmed,
+        subject: subject,
+        whereas: whereas,
+        resolved: resolved,
+        created: new Date().toISOString(),
+      };
+      userTemplates[kind].push(t);
+      saveUserTemplates();
+      renderTemplateSelect(_tmplSelectId(kind), kind);
+      showToast('Template "' + trimmed + '" saved.');
+      return true;
+    }
+  });
+}
+
+// ---------- Manage (rename / delete) ----------
+function openManageModal(kind){
+  let m = document.getElementById('tmpl-manage');
+  if (!m){
+    m = document.createElement('div');
+    m.id = 'tmpl-manage';
+    m.innerHTML = `
+      <div class="mbox mbox-wide">
+        <h3>Manage templates</h3>
+        <p class="mp">Rename or delete your saved <span class="kindword"></span> templates. Built-in templates aren't shown here.</p>
+        <div class="manage-list"></div>
+        <div class="acts">
+          <button class="btn ghost" data-close>Done</button>
+        </div>
+      </div>`;
+    document.body.appendChild(m);
+    m.addEventListener('click', (e)=>{
+      if (e.target === m || e.target.matches('[data-close]')){ m.classList.remove('open'); }
+    });
+  }
+  m.querySelector('.kindword').textContent = kind;
+  const list = m.querySelector('.manage-list');
+  list.innerHTML = '';
+  if (!userTemplates[kind].length){
+    list.innerHTML = '<div class="manage-empty">No saved templates yet. Use the ⭐ button to save the current document as a template.</div>';
+  } else {
+    userTemplates[kind].forEach(t => {
+      const row = document.createElement('div');
+      row.className = 'manage-row';
+      row.innerHTML = `
+        <input type="text" class="manage-name" value="">
+        <button class="manage-btn manage-rename" title="Rename">Rename</button>
+        <button class="manage-btn manage-delete" title="Delete">Delete</button>
+      `;
+      const input = row.querySelector('.manage-name');
+      input.value = t.label;
+      row.querySelector('.manage-rename').addEventListener('click', () => {
+        const v = input.value.trim();
+        if (!v) return;
+        t.label = v;
+        saveUserTemplates();
+        renderTemplateSelect(_tmplSelectId(kind), kind);
+        showToast('Renamed to "' + v + '".');
+      });
+      row.querySelector('.manage-delete').addEventListener('click', () => {
+        if (!confirm('Delete template "' + t.label + '"? This cannot be undone.')) return;
+        userTemplates[kind] = userTemplates[kind].filter(x => x.id !== t.id);
+        saveUserTemplates();
+        renderTemplateSelect(_tmplSelectId(kind), kind);
+        openManageModal(kind); // re-render
+      });
+      list.appendChild(row);
+    });
+  }
+  m.classList.add('open');
+}
+
+// ---------- Generic prompt + alert + toast ----------
+function showPromptModal({title, label, placeholder, value, confirmText, onConfirm}){
+  let m = document.getElementById('generic-prompt');
+  if (!m){
+    m = document.createElement('div');
+    m.id = 'generic-prompt';
+    m.innerHTML = `
+      <div class="mbox">
+        <h3 class="mtitle"></h3>
+        <label class="mlabel"></label>
+        <input type="text" class="minput">
+        <div class="acts">
+          <button class="btn ghost" data-cancel>Cancel</button>
+          <button class="btn primary" data-confirm></button>
+        </div>
+      </div>`;
+    document.body.appendChild(m);
+    m.addEventListener('click', (e)=>{
+      if (e.target === m || e.target.matches('[data-cancel]')){ m.classList.remove('open'); }
+      if (e.target.matches('[data-confirm]')){
+        const v = m.querySelector('.minput').value;
+        const ok = m._onConfirm ? m._onConfirm(v) : true;
+        if (ok !== false) m.classList.remove('open');
+      }
+    });
+    m.querySelector('.minput').addEventListener('keydown', (e)=>{
+      if (e.key === 'Enter'){ m.querySelector('[data-confirm]').click(); }
+      if (e.key === 'Escape'){ m.classList.remove('open'); }
+    });
+  }
+  m.querySelector('.mtitle').textContent = title;
+  m.querySelector('.mlabel').textContent = label;
+  const input = m.querySelector('.minput');
+  input.placeholder = placeholder || '';
+  input.value = value || '';
+  m.querySelector('[data-confirm]').textContent = confirmText || 'OK';
+  m._onConfirm = onConfirm;
+  m.classList.add('open');
+  setTimeout(()=>{ input.focus(); input.select(); }, 30);
+}
+
+function showAlert(title, message){
+  let m = document.getElementById('generic-alert');
+  if (!m){
+    m = document.createElement('div');
+    m.id = 'generic-alert';
+    m.innerHTML = `
+      <div class="mbox">
+        <h3 class="mtitle"></h3>
+        <p class="mmsg"></p>
+        <div class="acts">
+          <button class="btn primary" data-close>OK</button>
+        </div>
+      </div>`;
+    document.body.appendChild(m);
+    m.addEventListener('click', (e)=>{
+      if (e.target === m || e.target.matches('[data-close]')){ m.classList.remove('open'); }
+    });
+  }
+  m.querySelector('.mtitle').textContent = title;
+  m.querySelector('.mmsg').textContent = message;
+  m.classList.add('open');
+}
+
+let _toastTimer = null;
+function showToast(message){
+  let t = document.getElementById('app-toast');
+  if (!t){
+    t = document.createElement('div');
+    t.id = 'app-toast';
+    document.body.appendChild(t);
+  }
+  t.textContent = message;
+  t.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(()=> t.classList.remove('show'), 2200);
+}
+
+// ---------- DOCX import ----------
+async function importDocxFromFile(kind, file){
+  if (!file || typeof mammoth === 'undefined') {
+    showAlert('Import failed', 'DOCX importer is not available.');
+    return;
+  }
+  try {
+    const buf = await file.arrayBuffer();
+    const result = await mammoth.extractRawText({ arrayBuffer: buf });
+    const raw = (result && result.value) || '';
+    const parsed = parseDocxText(raw, kind);
+    applyDocxParse(kind, parsed);
+  } catch(e){
+    showAlert('Import failed', 'Couldn’t read that .docx file. Make sure it’s a valid Word document.');
+  }
+}
+
+// Best-effort parser. USG bills follow a loose template:
+//   "[Bill / Amendment] #NN"               -> number
+//   "[Year] / [Academic Year]: 2024-2025"  -> year
+//   "Author(s): ..., ..."                  -> authors (comma sep)
+//   "Co-Sponsor(s): ..., ..."              -> cosponsors
+//   "Committee: Senate / Programs"         -> committee
+//   "A BILL CONCERNING <SUBJECT>"          -> subject
+//   "WHEREAS, ...;" / "WHEREAS ..."        -> whereas[]
+//   "BE IT ENACTED ..." or "RESOLVED..."   -> resolved[]
+function parseDocxText(text, kind){
+  // Normalize line breaks; split into paragraphs preserving blank lines as separators.
+  const norm = text.replace(new RegExp("\\r\\n?", "g"), "\n").replace(new RegExp("\\u00a0", "g"), " ");
+  const paras = norm.split(/\n+/).map(l => l.trim()).filter(Boolean);
+
+  const out = { number:"", year:"", committee:"", article:"", subject:"",
+                authors:[], cosponsors:[], whereas:[], resolved:[] };
+
+  // ----- Single-line metadata pass -----
+  for (let i = 0; i < paras.length; i++){
+    const ln = paras[i];
+    if (!out.number){
+      const m = ln.match(/(?:Bill|Amendment|Resolution)\s*#?\s*(\d{1,4})/i);
+      if (m) out.number = m[1];
+    }
+    if (!out.year){
+      // Standalone "2025-2026" line, or labeled "Year: 2025-2026"
+      const m = ln.match(/((?:19|20)\d{2})\s*[\u2013\u2014\-]\s*((?:19|20)?\d{2,4})/);
+      if (m){
+        out.year = (m[1] + "-" + m[2]).replace(/\s+/g,"");
+      }
+    }
+    if (!out.committee){
+      const m = ln.match(/^Committee\s*:?\s*(.+)$/i);
+      if (m) out.committee = m[1].trim().replace(/[.,;]+$/, "");
+    }
+    if (!out.article && kind === "amendment"){
+      const m = ln.match(/^Article\s*:?\s*(.+)$/i);
+      if (m) out.article = m[1].trim().replace(/[.,;]+$/, "");
+    }
+    const aMatch = ln.match(/^(?:Authors?|Sponsors?)(?:\(s\))?\s*:?\s*(.+)$/i);
+    if (aMatch && !out.authors.length){
+      out.authors = aMatch[1].split(/\s*[,;]\s*|\s+and\s+/i)
+        .map(s => s.trim())
+        .filter(Boolean);
+    }
+    const cMatch = ln.match(/^(?:Co-?[Ss]ponsors?)(?:\(s\))?\s*:?\s*(.+)$/i);
+    if (cMatch && !out.cosponsors.length){
+      out.cosponsors = cMatch[1].split(/\s*[,;]\s*|\s+and\s+/i)
+        .map(s => s.trim())
+        .filter(Boolean);
+    }
+  }
+
+  // ----- Subject line -----
+  // Pattern: a paragraph starting with "A BILL/RESOLUTION/AMENDMENT/ACT ... CONCERNING|REGARDING".
+  // Subject is either on the same line after CONCERNING/REGARDING, or on the next paragraph.
+  for (let i = 0; i < paras.length; i++){
+    const ln = paras[i];
+    const m = ln.match(/A(?:N)?\s+(?:BILL|RESOLUTION|AMENDMENT|ACT)\b[^]*?(?:CONCERNING|REGARDING)\s*(.*)$/i);
+    if (m){
+      let subj = (m[1] || "").trim().replace(/[.,;:]+$/, "");
+      if (!subj && i + 1 < paras.length){
+        // Subject on next non-empty paragraph (skip lines that are just punctuation)
+        for (let j = i + 1; j < paras.length; j++){
+          const cand = paras[j].trim();
+          if (cand && !/^[\s.:;,]*$/.test(cand)){ subj = cand.replace(/[.,;:]+$/, ""); break; }
+        }
+      }
+      if (subj) out.subject = subj;
+      break;
+    }
+  }
+
+  // ----- WHEREAS clauses -----
+  // Match "WHEREAS" followed by ; or , or whitespace, then capture until end of paragraph.
+  // Each whereas clause is contained within a single paragraph in our normalization.
+  for (const ln of paras){
+    const m = ln.match(/^WHEREAS\b[\s,;:]+(.+)$/i);
+     if (m){
+      let clause = m[1].replace(/\s+/g, " ").trim();
+      clause = clause.replace(/[;,\s]+$/, "");
+      if (clause.length >= 4) out.whereas.push(clause);
+    }
+  }
+
+  // ----- ENACTED / RESOLVED clauses -----
+  // Find the resolved-section start: a paragraph containing "BE IT (FURTHER )?(ENACTED|RESOLVED)"
+  // or "THEREFORE BE IT" / "NOW THEREFORE BE IT".
+  // Treat header paragraph as preamble (discard if ends with ":" or is all-caps shouting).
+  // Subsequent paragraphs are clauses; strip any "Be it (further )?(resolved|enacted) (that )?" prefix.
+  let startedResolved = false;
+  for (let i = 0; i < paras.length; i++){
+    const ln = paras[i];
+    if (!startedResolved){
+      if (/(?:NOW\s+)?THEREFORE\s+BE\s+IT|^\s*BE\s+IT\s+(?:FURTHER\s+)?(?:ENACTED|RESOLVED|AMENDED)\b|^Be\s+it\s+(?:further\s+)?(?:enacted|resolved|amended)\b/i.test(ln)){
+        startedResolved = true;
+        // If line ends with ":" or is upper-case header (more than 50% uppercase letters), skip it as preamble.
+        const stripped = ln.replace(/[\s.:;,]+$/, "");
+        const letters = stripped.replace(/[^A-Za-z]/g, "");
+        const upperFrac = letters.length ? (letters.replace(/[^A-Z]/g, "").length / letters.length) : 0;
+        if (/[:]\s*$/.test(ln) || upperFrac > 0.7){
+          continue; // preamble — skip
+        }
+        // Otherwise, treat this line itself as a clause.
+      }
+    }
+    if (!startedResolved) continue;
+    // Stop at signatory / passage boilerplate
+    if (/^(?:PASSED|ADOPTED|PASSED\s+and\s+ADOPTED|Senate\s+President|Date\s*:|Senator\s+\S+\s+\S+\s*,\s*Senate\s+President|_{6,}|Undergraduate\s+Student\s+Body\s+President)\b/i.test(ln)){
+      break;
+    }
+    // Strip clause-starter prefix
+    let clause = ln.replace(/^(?:NOW\s+)?THEREFORE\s+BE\s+IT(?:\s+(?:FURTHER\s+)?(?:ENACTED|RESOLVED|AMENDED))?(?:\s+BY[^,:]*)?[\s,:]+(?:that\s+)?/i, "");
+    clause = clause.replace(/^BE\s+IT\s+(?:FURTHER\s+)?(?:ENACTED|RESOLVED|AMENDED)(?:\s+BY[^,:]*)?[\s,:]+(?:that\s+)?/i, "");
+    clause = clause.replace(/^Be\s+it\s+(?:further\s+)?(?:enacted|resolved|amended)\s+(?:that\s+)?/i, "");
+    clause = clause.replace(/^(?:RESOLVED|Resolved)[\s,:]+(?:that\s+)?/i, "");
+    clause = clause.replace(/\s+/g, " ").trim().replace(/[.;\s]+$/, "");
+    if (clause.length >= 4) out.resolved.push(clause);
+  }
+
+  return out;
+}
+
+function applyDocxParse(kind, p){
+  const finish = () => {
+    const s = state[kind];
+    if (p.number) s.number = p.number;
+    if (p.year) s.year = p.year;
+    if (p.committee && 'committee' in s) s.committee = p.committee;
+    if (p.article && 'article' in s) s.article = p.article;
+    if ('subject' in s && p.subject) s.subject = p.subject.toUpperCase();
+    if (p.authors.length) s.authors = p.authors.slice();
+    if (p.cosponsors.length) s.cosponsors = p.cosponsors.slice();
+    if (p.whereas.length) s.whereas = p.whereas.slice();
+    if (p.resolved.length) s.resolved = p.resolved.slice();
+    _tmplSnapshots[kind] = null; // user-imported, not a template
+    bindFields(); renderAllClauseLists(); renderAllNameLists(); renderPreview(); renderCompliance();
+    saveState();
+    const counts = [];
+    if (p.subject) counts.push('subject');
+    if (p.whereas.length) counts.push(p.whereas.length + ' WHEREAS');
+    if (p.resolved.length) counts.push(p.resolved.length + ' ENACTED');
+    if (p.authors.length) counts.push(p.authors.length + ' author' + (p.authors.length===1?'':'s'));
+    showToast('Imported: ' + (counts.length ? counts.join(', ') : 'nothing recognized — fill manually'));
+  };
+  if (templateWouldOverwrite(kind)){
+    showTemplateConfirm('the imported DOCX', finish, ()=>{});
+  } else {
+    finish();
+  }
+}
+
+// ---------- Wire up Identification toolbar buttons ----------
+function _wireTemplateTools(){
+  document.querySelectorAll('[data-tmpl-save]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const run = () => saveCurrentAsTemplate(btn.dataset.tmplSave);
+      if (typeof window.requireAuth === 'function') window.requireAuth(run); else run();
+    });
+  });
+  document.querySelectorAll('[data-tmpl-import-docx]').forEach(btn => {
+    const kind = btn.dataset.tmplImportDocx;
+    const input = document.querySelector('[data-tmpl-docx-input="' + kind + '"]');
+    if (!input) return;
+    btn.addEventListener('click', () => input.click());
+    input.addEventListener('change', () => {
+      if (input.files && input.files[0]) importDocxFromFile(kind, input.files[0]);
+      input.value = '';
+    });
+  });
+}
+
+renderTemplateSelect('b_tmpl_select', 'bill');
+renderTemplateSelect('r_tmpl_select', 'resolution');
+renderTemplateSelect('a_tmpl_select', 'amendment');
+if (typeof window.getCurrentUser === 'function' && window.getCurrentUser()) _syncTemplatesFromAccount();_wireTemplateTools();
+
+
+document.querySelectorAll('[data-reset]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const k = btn.dataset.reset;
+    state[k] = structuredClone(DEFAULTS[k]);
+    bindFields(); renderAllClauseLists(); renderAllNameLists(); renderPreview(); renderCompliance();
+  });
+});
+
+// ---------- print-layout scaling ----------
+// The .doc is a real 816x1056 letter page. We scale it to fit the column,
+// and size the .doc-shell wrapper to the scaled dimensions so the layout
+// (scrollbars, margins) is honest.
+function scalePreview(){
+  const vp = document.getElementById('preview-viewport');
+  const shell = document.getElementById('doc-shell');
+  const doc = document.getElementById('preview');
+  if(!vp || !shell || !doc) return;
+  const cs = getComputedStyle(vp);
+  const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+  const padY = parseFloat(cs.paddingTop)  + parseFloat(cs.paddingBottom);
+  const availW = Math.max(200, vp.clientWidth  - padX);
+  const availH = Math.max(200, vp.clientHeight - padY);
+  const docH = doc.offsetHeight; // >= 1056
+  // Zoom to fill: scale to the LARGER ratio so one dimension fills the grey.
+  // The other dimension scrolls within the viewport. Never zoom past 100%.
+  const scale = Math.min(1, Math.max(availW / 816, availH / docH));
+  doc.style.transform = `scale(${scale})`;
+  shell.style.width  = (816 * scale) + 'px';
+  shell.style.height = (docH * scale) + 'px';
+}
+window.addEventListener('resize', scalePreview);
+
+// ---------- init ----------
+bindFields();
+renderAllClauseLists();
+renderAllNameLists();
+renderPreview();
+renderCompliance();
+
+// ---------- Pro Mode toggle ----------
+(function initProMode(){
+  const KEY = 'usg_formatter_pro_mode';
+  const input = document.getElementById('pro-mode-toggle');
+  if (!input) return;
+  let on = false;
+  try { on = localStorage.getItem(KEY) === '1'; } catch(e){}
+  input.checked = on;
+  document.body.classList.toggle('pro-mode', on);
+  input.addEventListener('change', ()=>{
+    document.body.classList.toggle('pro-mode', input.checked);
+    try { localStorage.setItem(KEY, input.checked ? '1' : '0'); } catch(e){}
+    // Recompute download-button state so the blocked styling clears immediately.
+    renderCompliance();
+    if (typeof scalePreview === 'function') requestAnimationFrame(scalePreview);
+  });
+})();
+
+// ---------- Settings dropdown ----------
+(function initSettingsDropdown(){
+  const dd = document.getElementById('settings-dd');
+  const trigger = document.getElementById('settings-trigger');
+  const menu = document.getElementById('settings-menu');
+  if (!dd || !trigger || !menu) return;
+  // Move the menu to <body> so no ancestor stacking context can trap it.
+  if (menu.parentElement !== document.body) document.body.appendChild(menu);
+
+  function position(){
+    const r = trigger.getBoundingClientRect();
+    const menuWidth = menu.offsetWidth || 280;
+    const margin = 8;
+    let left = r.right - menuWidth;
+    left = Math.max(margin, Math.min(left, window.innerWidth - menuWidth - margin));
+    menu.style.top  = (r.bottom + 8) + 'px';
+    menu.style.left = left + 'px';
+  }
+  function close(){ dd.classList.remove('open'); trigger.setAttribute('aria-expanded','false'); menu.style.display='none'; }
+  function open(){
+    dd.classList.add('open'); trigger.setAttribute('aria-expanded','true');
+    menu.style.display='block';
+    position();
+  }
+  trigger.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    dd.classList.contains('open') ? close() : open();
+  });
+  document.addEventListener('click', (e)=>{
+    if (!dd.contains(e.target) && !menu.contains(e.target)) close();
+  });
+  document.addEventListener('keydown', (e)=>{
+    if (e.key === 'Escape') close();
+  });
+  window.addEventListener('resize', ()=>{ if (dd.classList.contains('open')) position(); });
+  window.addEventListener('scroll', ()=>{ if (dd.classList.contains('open')) position(); }, true);
+})();
+
+// Run scale after layout settles + whenever preview content changes
+requestAnimationFrame(scalePreview);
+</script>
+
+
+</body></html>
